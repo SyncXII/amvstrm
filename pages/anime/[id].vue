@@ -299,7 +299,7 @@ const formatStringDate = (year, month, day) => {
                               variant="solo"
                             ></v-select>
                             <v-list
-                              v-if="selectedProvider == 'Gogoanime'"
+                              v-if="selectedProvider == 'ENGLISH (SUB)'"
                               lines="two"
                               height="320px"
                             >
