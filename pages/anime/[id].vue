@@ -285,7 +285,7 @@ const formatStringDate = (year, month, day) => {
                   <v-card elevation="0">
                     <v-tabs v-model="ep_tab" grow="">
                       <v-tab value="eplist"> Episode list </v-tab>
-                      <v-tab value="other"> Other </v-tab>
+                      <!--<v-tab value="other"> Other </v-tab>-->
                     </v-tabs>
                     <v-card-text>
                       <v-window v-model="ep_tab">
@@ -295,11 +295,11 @@ const formatStringDate = (year, month, day) => {
                               v-model="selectedProvider"
                               clearable
                               label="Select streaming provider"
-                              :items="['ENGLISH (SUB)', 'ENGLISH (DUB)']"
+                              :items="['English (SUB)', 'English (DUB)']"
                               variant="solo"
                             ></v-select>
                             <v-list
-                              v-if="selectedProvider == 'ENGLISH (SUB)'"
+                              v-if="selectedProvider == 'English (SUB)'"
                               lines="two"
                               height="320px"
                             >
@@ -340,7 +340,7 @@ const formatStringDate = (year, month, day) => {
                               </v-virtual-scroll>
                             </v-list>
                             <v-list
-                              v-else-if="selectedProvider == 'ENGLISH (DUB)'"
+                              v-else-if="selectedProvider == 'English (DUB)'"
                               lines="two"
                               height="300px"
                             >
@@ -385,7 +385,7 @@ const formatStringDate = (year, month, day) => {
                             lines="two"
                           >
                             <v-list-item
-                              title="ENGLISH (SUB)"
+                              title="Gogoanime (SUB)"
                               :subtitle="
                                 anime?.id_provider.idGogo == ''
                                   ? 'Not available'
@@ -405,7 +405,7 @@ const formatStringDate = (year, month, day) => {
                               </template>
                             </v-list-item>
                             <v-list-item
-                              title="ENGLISH (DUB)"
+                              title="Gogoanime (DUB)"
                               :subtitle="
                                 anime?.id_provider.idGogoDub == ''
                                   ? 'Not available'
