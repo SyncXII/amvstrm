@@ -61,7 +61,7 @@ const gotoRandomID = async () => {
             <v-icon icon="mdi-information" />
           </template>
         </v-list-item>
-        <v-list-item title="Help" href="https://amvdocs.pages.dev/help">
+        <!--<v-list-item title="Help" href="https://amvdocs.pages.dev/help">
           <template #append>
             <v-icon icon="mdi-help" />
           </template>
@@ -70,7 +70,7 @@ const gotoRandomID = async () => {
           <template #append>
             <v-icon icon="mdi-github" />
           </template>
-        </v-list-item>
+        </v-list-item>-->
       </v-list>
     </v-navigation-drawer>
 
@@ -96,7 +96,7 @@ const gotoRandomID = async () => {
       </ClientOnly>
     </v-main>
     <v-footer app height="auto" dense absolute>
-      <p>amvstrm Cambodia © Copyright {{ new Date().getFullYear() }}</p>
+      <p>AniSync © Copyright {{ new Date().getFullYear() }}</p>
       <v-spacer />
       <v-btn
         :prepend-icon="
