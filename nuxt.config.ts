@@ -1,26 +1,26 @@
 export default defineNuxtConfig({
   app: {
     head: {
-      titleTemplate: "%s - amvstrm",
-      title: "amvstrm",
+      titleTemplate: "%s - AniSync",
+      title: "AniSync",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
           name: "description",
-          content: "amvstrm - A streaming service for weebo...",
+          content: "AniSync – Your Ultimate Anime Streaming Experience!",
         },
         {
           name: "keywords",
           content:
-            "amvstrm, amvstr, amvstreaming, anime streaming site, anime, free anime",
+            "anisync, animesync, masteraime, animepahe, aniflix, animeflix, gogoanime, watch one piece, amvstrm, amvstr, amvstreaming, anime streaming site, anime, free anime",
         },
         { property: "og:type", content: "website" },
         { property: "og:url", content: "/" },
-        { property: "og:title", content: "Home - amvstrm" },
+        { property: "og:title", content: "Home - AniSync" },
         {
           property: "og:description",
-          content: "amvstrm - A streaming service for weebo...",
+          content: "AniSync – Your Ultimate Anime Streaming Experience!",
         },
         {
           property: "og:image",
@@ -28,10 +28,10 @@ export default defineNuxtConfig({
         },
         { property: "twitter:card", content: "summary_large_image" },
         { property: "twitter:url", content: "/" },
-        { property: "twitter:title", content: "Home - amvstrm" },
+        { property: "twitter:title", content: "Home - AniSync" },
         {
           property: "twitter:description",
-          content: "amvstrm - A streaming service for weebo...",
+          content: "AniSync – Your Ultimate Anime Streaming Experience!",
         },
         {
           property: "twitter:image",
@@ -115,8 +115,8 @@ export default defineNuxtConfig({
       "wh-icon.png",
     ],
     manifest: {
-      name: "amvstrm",
-      short_name: "amvstrm",
+      name: "AniSync",
+      short_name: "AniSync",
       start_url: "/pwa",
       display: "standalone",
       background_color: "#191919",
