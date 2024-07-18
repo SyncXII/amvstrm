@@ -1,10 +1,10 @@
 <script setup>
 useSeoMeta({
   ogTitle: "Home",
-  ogDescription: "amvstrm - A streaming service for weebo...",
+  ogDescription: "AniSync - Your Ultimate Anime Streaming Experience!",
   ogUrl: useRoute().fullPath,
   twitterTitle: "Home",
-  twitterDescription: "amvstrm - A streaming service for weebo...",
+  twitterDescription: "AniSync - Your Ultimate Anime Streaming Experience!",
   twitterCard: "summary",
 });
 
