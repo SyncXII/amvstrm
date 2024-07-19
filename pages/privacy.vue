@@ -1,11 +1,11 @@
 <script setup>
 useSeoMeta({
   ogTitle: "Privacy Policy",
-  ogDescription: "Privacy policy for amvstrm",
+  ogDescription: "Privacy policy for AniSync",
   ogImage: "logo.png",
   ogUrl: "[og:url]",
   twitterTitle: "Home",
-  twitterDescription: "Privacy policy for amvstrm",
+  twitterDescription: "Privacy policy for AniSync",
   twitterImage: "logo.png",
   twitterCard: "summary",
 });
@@ -74,7 +74,7 @@ useHead({
           <p>
             <strong>Company</strong> (referred to as either &quot;the
             Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in
-            this Agreement) refers to amvstrm.
+            this Agreement) refers to AniSync.
           </p>
         </li>
         <li>
@@ -122,12 +122,12 @@ useHead({
         </li>
         <li>
           <p>
-            <strong>Website</strong> refers to amvstrm, accessible from
+            <strong>Website</strong> refers to AniSync, accessible from
             <a
-              href="https://amvstr.ml"
+              href="https://anisync.online"
               rel="external nofollow noopener"
               target="_blank"
-              >https://amvstr.ml</a
+              >https://anisync.onnline</a
             >
           </p>
         </li>
@@ -499,7 +499,7 @@ useHead({
         If you have any questions about this Privacy Policy, You can contact us:
       </p>
       <ul>
-        <li>By email: admin@amvstr.ml</li>
+        <li>By email: synctechkit@proton.me</li>
       </ul>
     </div>
   </v-container>
