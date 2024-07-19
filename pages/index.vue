@@ -15,10 +15,16 @@ useHead({
   title: "Home",
   script: [
         {
-            type: 'text/javascript', 
-            src: '//pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js'
-        } 
-  ]
+          type: 'text/javascript',
+          src: '//pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js',
+          'data-cfasync': 'false'
+        },
+        {
+          type: 'text/javascript',
+          src: '//pl23817253.highrevenuenetwork.com/17/ee/0f/17ee0f5da3870577c2ae549585183a25.js',
+          'data-cfasync': 'false'
+        }
+      ]
 });
 </script>
 
