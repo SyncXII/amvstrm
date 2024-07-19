@@ -1,9 +1,4 @@
 <script setup>
-var script = document.createElement('script');
-script.src = "//pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js";
-document.head.appendChild(script); //or something of the likes
-
-  
 import { useStorage } from "@vueuse/core";
 const env = useRuntimeConfig();
 
