@@ -17,20 +17,25 @@ useHead({
 </script>
 
 <template>
-    <div>
-        <VueScriptComponent script='<script type="text/javascript" src="//pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js"></script>'/>
-    <div>
+    <div id="component-root">
+        <!-- (...) -->
+        <div v-el:script-holder></div>
+    </div>
 </template>
 
 <script>
-import VueScriptComponent from 'vue-script-component'
-export default {
-  components: {
-    VueScriptComponent
-  }
-}
+    export default {
+        data () {
+            return {};
+        },
+        ready() {
+             let scriptEl = document.createElement('script');
+             scriptEl.setAttribute('src', '//pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js');
+             scriptEl.setAttribute('data-some-param', 'paramvalue');
+             this.$els.scriptHolder.appendChild(scriptEl);
+        },
+    }
 </script>
-
 
 <template>
   <PgCompsLandingPage />
