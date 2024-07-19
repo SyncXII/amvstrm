@@ -5,7 +5,7 @@
       <h1>More</h1>
     </div>
     <v-list lines="two">
-      <v-list-item title="amvstrm's PWA mode" subtitle="Version amvN3 (Nuxt 3)">
+      <v-list-item title="AniSync's PWA mode" subtitle="Version N3 (Nuxt 3)">
         <template #prepend>
           <img
             src="/icon.png"
@@ -23,7 +23,7 @@
       <v-list-item title="Web Mode" append-icon="mdi-web" to="/"></v-list-item>
       <v-list-item title="About us" target="blank" href="/about" />
       <v-list-item title="Privacy Policy" target="blank" href="/privacy" />
-      <v-list-item
+      <!--<v-list-item
         title="Help"
         target="blank"
         href="https://docs.amvstr.ml/help"
@@ -40,7 +40,7 @@
         <template #append>
           <v-icon icon="mdi-github" />
         </template>
-      </v-list-item>
+      </v-list-item>-->
     </v-list>
   </v-container>
 </template>
