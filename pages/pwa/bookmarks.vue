@@ -4,11 +4,11 @@
 <script setup>
 useSeoMeta({
   ogTitle: "Bookmarker",
-  ogDescription: "amvstrm`s local bookmaker",
+  ogDescription: "AniSync`s local bookmaker",
   ogImage: "",
   ogUrl: "",
-  twitterTitle: "Bookmarker - amvstrm",
-  twitterDescription: "amvstrm`s local bookmaker",
+  twitterTitle: "Bookmarker - AniSync",
+  twitterDescription: "AniSync`s local bookmaker",
   twitterImage: "",
   twitterCard: "summary",
 });
