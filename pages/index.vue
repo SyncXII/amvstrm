@@ -14,6 +14,15 @@ useHead({
   },
   title: "Home",
 });
+
+useAds({
+    script:
+        {
+            type: 'text/javascript', 
+            src: '//pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js',
+            async: true
+        }
+});
 </script>
 
 <template>
