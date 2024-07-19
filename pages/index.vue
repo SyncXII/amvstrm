@@ -1,3 +1,5 @@
+import { useScriptTag } from '@vueuse/core'
+
 <script setup>
 useSeoMeta({
   ogTitle: "Home",
@@ -15,15 +17,13 @@ useHead({
   title: "Home",
 });
 
-import { useScriptTag } from '@vueuse/core'
-
 useScriptTag(
   'https://pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js',
   // on script tag loaded.
   (el: HTMLScriptElement) => {
     // do something
   },
-)
+);
 </script>
 
 <template>
