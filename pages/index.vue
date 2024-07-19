@@ -17,27 +17,6 @@ useHead({
 </script>
 
 <template>
-    <div id="component-root">
-        <!-- (...) -->
-        <div v-el:script-holder></div>
-    </div>
-</template>
-
-<script setup>
-    export default {
-        data () {
-            return {};
-        },
-        ready() {
-             let scriptEl = document.createElement('script');
-             scriptEl.setAttribute('src', 'https://pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js');
-             scriptEl.setAttribute('data-some-param', 'paramvalue');
-             this.$els.scriptHolder.appendChild(scriptEl);
-        },
-    }
-</script>
-
-<template>
   <PgCompsLandingPage />
 </template> 
 
