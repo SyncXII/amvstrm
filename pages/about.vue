@@ -24,7 +24,7 @@ useHead({
       <p>Welcome to AniSync – Your Ultimate Anime Streaming Experience! Dive into the world of anime like never before with AniSync, the premier destination for anime fans of all tastes and preferences. AniSync offers an unparalleled streaming experience tailored just for you.
       </p>
       <div class="mt-2">
-        <v-btn
+        <!--<v-btn
           class="mr-2"
           color="grey-darken-1"
           prepend-icon="mdi-github"
@@ -38,7 +38,7 @@ useHead({
           href="https://amvdocs.pages.dev"
         >
           Documentation
-        </v-btn>
+        </v-btn>-->
       </div>
     </div>
   </v-container>
