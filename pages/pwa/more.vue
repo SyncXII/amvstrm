@@ -14,8 +14,8 @@
         </template>
       </v-list-item>
       <v-list-item
-        title="amvstrm"
-        :subtitle="new Date().getFullYear() + ' © amvstrm'"
+        title="AniSync"
+        :subtitle="new Date().getFullYear() + ' © AniSync'"
       />
     </v-list>
     <v-divider class="my-4"></v-divider>
