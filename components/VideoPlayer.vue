@@ -63,7 +63,7 @@ export default {
       },
       contextmenu: [
         {
-          html: `© amvstrm ${new Date().getFullYear()}`,
+          html: `© AniSync ${new Date().getFullYear()}`,
           click: function () {
             window.open("/");
           },
