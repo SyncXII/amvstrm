@@ -53,25 +53,25 @@ useSeoMeta({
   ogTitle: `${
     anime.value?.title.userPreferred
       ? anime.value?.title.userPreferred + " Episode " + getEP
-      : "amvstrm"
-  } - amvstrm`,
+      : "AniSync"
+  } - AniSync`,
   ogDescription: `Watch ${
     anime.value?.title.userPreferred
       ? anime.value?.title.userPreferred + " Episode " + getEP
-      : "amvstrm"
-  } on amvstrm`,
+      : "AniSync"
+  } on AniSync`,
   ogImage: anime?.value.coverImage.large,
   ogUrl: useRoute().fullPath,
   twitterTitle: `${
     anime.value?.title.userPreferred
       ? anime.value?.title.userPreferred + " Episode " + getEP
-      : "amvstrm"
-  } - amvstrm`,
+      : "AniSync"
+  } - AniSync`,
   twitterDescription: `Watch ${
     anime.value?.title.userPreferred
       ? anime.value?.title.userPreferred + " Episode " + getEP
-      : "amvstrm"
-  } on amvstrm`,
+      : "AniSync"
+  } on AniSync`,
   twitterImage: anime?.value.coverImage.large,
   twitterCard: "summary",
 });
@@ -82,7 +82,7 @@ useHead({
   },
   title: anime.value?.title.userPreferred
     ? anime.value?.title.userPreferred + " Episode " + getEP
-    : "amvstrm",
+    : "AniSync",
 });
 
 const skipTimeHighlight = () => {
