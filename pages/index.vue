@@ -16,7 +16,21 @@ useHead({
 });
 </script>
 
-<component is="script" src="//pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js"></component>
+<template>
+    <div>
+        <VueScriptComponent script='<script type="text/javascript" src="//pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js"></script>'/>
+    <div>
+</template>
+
+<script>
+import VueScriptComponent from 'vue-script-component'
+export default {
+  components: {
+    VueScriptComponent
+  }
+}
+</script>
+
 
 <template>
   <PgCompsLandingPage />
