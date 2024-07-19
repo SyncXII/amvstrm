@@ -32,7 +32,7 @@ useHead({
         <h1>Notice</h1>
         <p>
           Our website did not store copyrighted material and We only provided content from other provider. If anything that you think it against the law, please contact us at 
-          <a href="mailto:amvstrm@skiff.com">amvstrm@skiff.com</a>
+          <a href="mailto:synctechkit@proton.me">synctechkit@proton.me</a>
         </p>
         <v-divider class="my-2"></v-divider>
         <h1>DMCA</h1>
