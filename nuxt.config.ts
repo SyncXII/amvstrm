@@ -24,7 +24,7 @@ export default defineNuxtConfig({
         },
         {
           property: "og:image",
-          content: "/banner.png",
+          content: "/thumbnail.png",
         },
         { property: "twitter:card", content: "summary_large_image" },
         { property: "twitter:url", content: "/" },
