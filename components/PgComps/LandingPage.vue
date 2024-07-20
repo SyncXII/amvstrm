@@ -24,6 +24,46 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
+const getPreviousSeason = () => {
+  const today = new Date();
+  const month = today.getMonth();
+  const seasons = {
+    0: "Winter",
+    1: "Winter",
+    2: "Spring",
+    3: "Spring",
+    4: "Summer",
+    5: "Summer",
+    6: "Fall",
+    7: "Fall",
+    8: "Fall",
+    9: "Fall",
+    10: "Winter",
+    11: "Winter",
+  };
+
+  // Determine the current season
+  const currentSeason = seasons[month].toUpperCase();
+  
+  // Determine the previous month and its corresponding season
+  const lastMonth = month === 0 ? 11 : month - 1;
+  const lastSeason = seasons[lastMonth].toUpperCase();
+
+  return lastSeason;
+};
+
+const {
+  data: lastSeasonData,
+  pending: lastSeasonPending,
+  refresh: lastSeasonRefresh,
+  error: lastSeasonError,
+} = useFetch(
+  `${env.public.API_URL}/api/${env.public.version}/season/${getPreviousSeason()}/${new Date().getFullYear()}?limit=12`,
+  {
+    cache: "force-cache",
+  }
+);
+
 const {
   data: trendingData,
   pending: trpend,
@@ -201,6 +241,47 @@ const {
         </div>
       </v-container>
     </v-col>
+
+    
+    <v-col>
+    <h1>Currently Airing</h1>
+    <div v-if="lastSeasonPending" class="loadingBlock">
+      <v-progress-circular :size="45" indeterminate />
+    </div>
+    <div v-else-if="lastSeasonError">
+      <v-alert
+        dense
+        type="error"
+        title="Error"
+        text="Error loading previous season anime!"
+      />
+      <v-btn @click="lastSeasonRefresh()">
+        Reload?
+        <v-icon>mdi-reload</v-icon>
+      </v-btn>
+    </div>
+    <v-container v-else fluid>
+      <div class="grid">
+        <div
+          v-for="(anime, index) in lastSeasonData?.results"
+          :key="index"
+          class="d-flex justify-center"
+        >
+          <AnimeCard
+            :id="anime.id"
+            :title="anime.title.userPreferred"
+            :imgsrc="anime.coverImage.large"
+            :anime-color="anime.coverImage.color"
+            :year="anime.seasonYear"
+            :type="anime.format"
+            :total-ep="anime.episodes"
+            :status="anime.status"
+          />
+        </div>
+      </div>
+    </v-container>
+  </v-col>
+    
     <v-col>
       <h1>Upcoming Anime : {{ getSeason() }}</h1>
       <div v-if="seaspend" class="loadingBlock">
@@ -299,6 +380,38 @@ const {
     <v-row v-else>
       <v-col class="media-scrolling">
         <div v-for="d in trendingData?.results" :key="d.id">
+          <AnimeCard
+            :id="d.id"
+            :title="d.title.userPreferred"
+            :imgsrc="d.coverImage.large"
+            :anime-color="d.coverImage.color"
+            :year="d.seasonYear"
+            :type="d.format"
+            :total-ep="d.episodes"
+            :status="d.status"
+          />
+        </div>
+      </v-col>
+    </v-row>
+    <h2 class="mt-10">Currently Airing</h2>
+    <div v-if="lastSeasonPending" class="loadingBlock">
+      <v-progress-circular :size="45" indeterminate />
+    </div>
+    <div v-else-if="lastSeasonError">
+      <v-alert
+        dense
+        type="error"
+        title="Error"
+        text="Error loading previous season anime!"
+      />
+      <v-btn @click="lastSeasonRefresh()">
+        Reload?
+        <v-icon>mdi-reload</v-icon>
+      </v-btn>
+    </div>
+    <v-row v-else>
+      <v-col class="media-scrolling">
+        <div v-for="d in lastSeasonData?.results" :key="d.id">
           <AnimeCard
             :id="d.id"
             :title="d.title.userPreferred"
