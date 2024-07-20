@@ -276,9 +276,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      API_URL: process.env.API_URL,
+      API_URL: process.env.API_URL || "https://api.anisync.online",
       version: process.env.VERSION || "v2",
-      posthogPublicKey: process.env.POSTHOG_PK || "",
+      posthogPublicKey: process.env.POSTHOG_PK || "phc_YtiSVvEpiFQia7T2e7UXVxCo2EqiinmnzrDlDFdxIwq",
       posthogHost: process.env.POSTHOG_HOST || "https://app.posthog.com",
       disqus_id: process.env.DISQUS_ID,
     },
