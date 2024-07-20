@@ -33,11 +33,11 @@ const gotoRandomID = async () => {
       <v-divider />
       <v-list>
         <v-list-item title="Home" to="/" append-icon="mdi-home" />
-        <v-list-item
+        <!--<v-list-item
           title="Search Anime"
           to="/search"
           append-icon="mdi-magnify"
-        />
+        />-->
         <v-list-item
           title="Bookmarker"
           to="/bookmarks"
