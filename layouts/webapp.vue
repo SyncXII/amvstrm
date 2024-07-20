@@ -24,10 +24,10 @@
         <v-icon>mdi-home</v-icon>
         Home
       </v-btn>
-      <v-btn to="/pwa/search" value="search">
+      <!--<v-btn to="/pwa/search" value="search">
         <v-icon>mdi-magnify</v-icon>
         Search
-      </v-btn>
+      </v-btn>-->
       <v-btn to="/pwa/bookmarks" value="bookmark">
         <v-icon>mdi-book</v-icon>
         Bookmarker
