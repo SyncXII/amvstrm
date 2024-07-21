@@ -548,22 +548,4 @@ const {
   height: 320px;
   gap: 1rem;
 }
-
-  .anime-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  width: 200px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin: 10px;
-}
-
-.anime-card-img {
-  width: 100%;
-  height: auto;
-}
-
-.anime-card-info {
-  padding: 16px;
-}
 </style>
