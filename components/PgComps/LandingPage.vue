@@ -55,7 +55,7 @@ const {
   refresh: lastSeasonRefresh,
   error: lastSeasonError,
 } = useFetch(
-  `${env.public.API_URL}/api/${env.public.version}/season/${getPreviousSeason()}/${new Date().getFullYear()}`,
+  `${env.public.API_URL}/api/${env.public.version}/season/${getPreviousSeason()}/${new Date().getFullYear()}?limit=200`,
   {
     cache: "force-cache",
   }
