@@ -555,21 +555,17 @@ const formatStringDate = (year, month, day) => {
     </v-card>
 
 <v-container>
+  <!-- Top Ad Container -->
   <v-row>
-    <!-- Ad Container at the top -->
     <v-col cols="12">
-      <v-row justify="center">
-        <v-col cols="12" sm="10" md="8" lg="6" xl="4">
-          <div class="pa-5" style="background-color: #212121">
-            <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
-              <div id="frame" style="max-width: 728px; width: 100%;">
-                <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
-                <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
-              </div>
-            </div>
+      <div class="pa-5" style="background-color: #212121; width: 100%;">
+        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+          <div id="frame" style="width: 100%;">
+            <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+            <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
           </div>
-        </v-col>
-      </v-row>
+        </div>
+      </div>
     </v-col>
   </v-row>
 
@@ -726,13 +722,13 @@ const formatStringDate = (year, month, day) => {
           </v-card>
         </v-col>
 
-        <!-- Ad Container in the middle -->
+        <!-- Middle Ad Container -->
         <v-col cols="12">
           <v-row justify="center">
             <v-col cols="12" sm="10" md="8" lg="6" xl="4">
-              <div class="pa-5" style="background-color: #212121">
+              <div class="pa-5" style="background-color: #212121; width: 100%;">
                 <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
-                  <div id="frame" style="max-width: 728px; width: 100%;">
+                  <div id="frame" style="width: 100%;">
                     <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
                     <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
                   </div>
@@ -868,13 +864,13 @@ const formatStringDate = (year, month, day) => {
           </v-card>
         </v-col>
         
-        <!-- Ad Container at the bottom -->
+        <!-- Bottom Ad Container -->
         <v-col cols="12">
           <v-row justify="center">
             <v-col cols="12" sm="10" md="8" lg="6" xl="4">
-              <div class="pa-5" style="background-color: #212121">
+              <div class="pa-5" style="background-color: #212121; width: 100%;">
                 <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
-                  <div id="frame" style="max-width: 728px; width: 100%;">
+                  <div id="frame" style="width: 100%;">
                     <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
                     <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
                   </div>
