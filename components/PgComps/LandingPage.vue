@@ -24,12 +24,6 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
-import { ref, onMounted } from 'vue';
-
-const lastSeasonData = ref([]);
-const lastSeasonPending = ref(true);
-const lastSeasonError = ref(false);
-
 const getPreviousSeason = () => {
   const today = new Date();
   const month = today.getMonth();
@@ -47,39 +41,25 @@ const getPreviousSeason = () => {
     10: "Winter",
     11: "Winter",
   };
-
+  // Determine the current season
+  const currentSeason = seasons[month].toUpperCase();
+  
+  // Determine the previous month and its corresponding season
   const lastMonth = month === 0 ? 11 : month - 1;
-  return seasons[lastMonth].toUpperCase();
+  const lastSeason = seasons[lastMonth].toUpperCase();
+  return lastSeason;
 };
-
-const fetchLastSeasonAnime = async () => {
-  lastSeasonPending.value = true;
-  lastSeasonError.value = false;
-
-  const apiUrl = 'https://api.anisync.online';
-  const season = getPreviousSeason();
-  const year = new Date().getFullYear();
-  const url = `${apiUrl}/api/v2/season/${season}/${year}?limit=100`;
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (!Array.isArray(data.results)) {
-      throw new Error('Unexpected data format');
-    }
-
-    // Filter out only the anime which are currently releasing
-    lastSeasonData.value = data.results.filter(anime => anime.status === 'RELEASING');
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    lastSeasonError.value = true;
-  } finally {
-    lastSeasonPending.value = false;
+const {
+  data: lastSeasonData,
+  pending: lastSeasonPending,
+  refresh: lastSeasonRefresh,
+  error: lastSeasonError,
+} = useFetch(
+  `${env.public.API_URL}/api/${env.public.version}/season/${getPreviousSeason()}/${new Date().getFullYear()}`,
+  {
+    cache: "force-cache",
   }
-};
-
-onMounted(fetchLastSeasonAnime);
+);
 
 const {
   data: trendingData,
@@ -272,7 +252,7 @@ const {
         title="Error"
         text="Error loading previous season anime!"
       />
-      <v-btn @click="fetchLastSeasonAnime">
+      <v-btn @click="lastSeasonRefresh()">
         Reload?
         <v-icon>mdi-reload</v-icon>
       </v-btn>
@@ -280,19 +260,20 @@ const {
     <v-container v-else fluid>
       <div class="grid">
         <div
-          v-for="(anime, index) in lastSeasonData"
-          :key="anime.id"
+          v-for="(anime, index) in lastSeasonData?.results"
+          :key="index"
           class="d-flex justify-center"
         >
-          <div class="anime-card">
-            <img :src="anime.coverImage.large" :alt="anime.title.userPreferred" class="anime-card-img" />
-            <div class="anime-card-info">
-              <h3>{{ anime.title.userPreferred }}</h3>
-              <p>{{ anime.seasonYear }} - {{ anime.format }}</p>
-              <p>Episodes: {{ anime.episodes }}</p>
-              <p>Status: {{ anime.status }}</p>
-            </div>
-          </div>
+          <AnimeCard
+            :id="anime.id"
+            :title="anime.title.userPreferred"
+            :imgsrc="anime.coverImage.large"
+            :anime-color="anime.coverImage.color"
+            :year="anime.seasonYear"
+            :type="anime.format"
+            :total-ep="anime.episodes"
+            :status="anime.status"
+          />
         </div>
       </div>
     </v-container>
@@ -554,22 +535,4 @@ const {
   gap: 1rem;
 }
 
-  /* Assuming your original styles are similar, use the same styles for consistency */
-.anime-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  width: 200px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin: 10px;
-}
-
-.anime-card-img {
-  width: 100%;
-  height: auto;
-}
-
-.anime-card-info {
-  padding: 16px;
-}
 </style>
