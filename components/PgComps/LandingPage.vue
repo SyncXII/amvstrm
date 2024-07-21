@@ -59,7 +59,7 @@ const fetchLastSeasonAnime = async () => {
   const apiUrl = 'https://api.anisync.online';
   const season = getPreviousSeason();
   const year = new Date().getFullYear();
-  const url = `${apiUrl}/api/v2/season/${season}/${year}`;
+  const url = `${apiUrl}/api/v2/season/${season}/${year}?limit=100`;
 
   try {
     const response = await fetch(url);
@@ -260,7 +260,7 @@ const {
     </v-col>
 
     
-  <v-col>
+    <v-col>
     <h1>Currently Airing</h1>
     <div v-if="lastSeasonPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
