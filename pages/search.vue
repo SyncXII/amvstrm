@@ -1,15 +1,11 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { useDebounceFn } from '@vueuse/core';
-
 const env = useRuntimeConfig();
 const searchResults = ref([]);
 const search = ref("");
 const searchLoading = ref(false);
 const isFocused = ref(false);
-const selectGenres = ref([]);
-const selectTags = ref([]);
+const selectGenres = ref();
+const selectTags = ref();
 const errorMessage = ref("");
 
 const genreItems = [
@@ -221,38 +217,23 @@ const tagItems = [
 const debouncedSearch = useDebounceFn(async (query) => {
   searchLoading.value = true;
   errorMessage.value = "";
-  
-  // Debugging: Log search parameters
-  console.log('Debounced search with:', query, selectGenres.value, selectTags.value);
 
   try {
-    // Clear previous results
-    searchResults.value = [];
-    
-    // Debugging: Confirm URL and payload
-    const url = `${env.public.API_URL}/api/${env.public.version}/search`;
-    const payload = {
-      search: query,
-      genres: selectGenres.value,
-      tags: selectTags.value,
-    };
-    console.log('Request URL:', url);
-    console.log('Request payload:', payload);
+    const data = await $fetch(
+      `${env.public.API_URL}/api/${env.public.version}/search`,
+      {
+        method: "POST",
+        body: {
+          search: query,
+          genres: selectGenres.value,
+          tags: selectTags.value,
+        },
+      }
+    );
 
-    const data = await $fetch(url, {
-      method: "POST",
-      body: payload,
-    });
-
-    // Debugging: Log API response
-    console.log('API response:', data);
-
-    // Update search results
-    searchResults.value = data.results || [];
+    searchResults.value = data.results;
   } catch (error) {
-    // Handle error and update UI
     errorMessage.value = "Failed to load search results.";
-    console.error('Search error:', error);
   } finally {
     searchLoading.value = false;
   }
