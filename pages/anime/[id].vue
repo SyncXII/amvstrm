@@ -553,25 +553,22 @@ const formatStringDate = (year, month, day) => {
         </div>
       </v-container>
     </v-card>
-
-<!-- Top Ad Container -->
-  <v-container>
-    <v-col cols="12">
-    <v-card>
-    <div class="pa-5" style="background-color: #212121">
-        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
-            <div id="frame" style="max-width: 728px; width: 100%;">
-                <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
-                <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
-            </div>
-        </div>
-    </div>
-    </v-card>
-    </v-col>
-</v-container>
     
 <v-container>  
     <v-row>
+<v-col cols="12">
+  <v-card class="ma-0 pa-0">
+    <div class="pa-0" style="background-color: #212121; width: 100%; box-sizing: border-box;">
+      <div id="ad-container" class="d-flex justify-center align-center pa-0" style="width: 100%; box-sizing: border-box;">
+        <div id="frame" style="max-width: 728px; width: 100%;">
+          <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+          <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
+        </div>
+      </div>
+    </div>
+  </v-card>
+</v-col>
+      
     <v-col cols="12" lg="3" md="4" sm="12">
       <ClientOnly>
         <v-card class="mb-2">
