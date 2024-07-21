@@ -555,8 +555,9 @@ const formatStringDate = (year, month, day) => {
     </v-card>
 
 <v-container>
+  <v-row>
   <!-- Top Ad Container -->
-  <v-container>
+    <v-col>
     <div class="pa-5" style="background-color: #212121">
         <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
             <div id="frame" style="max-width: 728px; width: 100%;">
@@ -565,9 +566,8 @@ const formatStringDate = (year, month, day) => {
             </div>
         </div>
     </div>
-</v-container>
+    </v-col>
 
-  <v-row>
     <v-col cols="12" lg="3" md="4" sm="12">
       <ClientOnly>
         <v-card class="mb-2">
@@ -721,8 +721,8 @@ const formatStringDate = (year, month, day) => {
         </v-col>
 
         <!-- Middle Ad Container -->
-        <v-row>
           <v-col cols="12">
+            <v-card>
               <div class="pa-5" style="background-color: #212121">
                   <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
                       <div id="frame" style="max-width: 728px; width: 100%;">
@@ -731,8 +731,8 @@ const formatStringDate = (year, month, day) => {
                       </div>
                   </div>
               </div>
+            </v-card>
           </v-col>
-        </v-row>
         
         <v-col cols="12">
           <v-card>
@@ -861,8 +861,8 @@ const formatStringDate = (year, month, day) => {
         </v-col>
         
         <!-- Bottom Ad Container -->
-        <v-row>
           <v-col cols="12">
+            <v-card>
               <div class="pa-5" style="background-color: #212121">
                   <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
                       <div id="frame" style="max-width: 728px; width: 100%;">
@@ -871,8 +871,8 @@ const formatStringDate = (year, month, day) => {
                       </div>
                   </div>
               </div>
+            </v-card>
           </v-col>
-        </v-row>
         
       </v-row>
     </v-col>
