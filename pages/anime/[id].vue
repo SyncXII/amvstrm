@@ -557,8 +557,8 @@ const formatStringDate = (year, month, day) => {
 <v-container>
   
   <!-- Top Ad Container -->
-    <v-col>
-      <v-card>
+    <v-col cols="12">
+    <v-card>
     <div class="pa-5" style="background-color: #212121">
         <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
             <div id="frame" style="max-width: 728px; width: 100%;">
@@ -567,7 +567,7 @@ const formatStringDate = (year, month, day) => {
             </div>
         </div>
     </div>
-      </v-card>
+    </v-card>
     </v-col>
   
     <v-row>
