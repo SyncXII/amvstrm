@@ -25,7 +25,6 @@ const getSeason = () => {
 };
 
 import { ref, onMounted } from 'vue';
-import AnimeCard from './AnimeCard.vue';
 
 const lastSeasonData = ref([]);
 const lastSeasonPending = ref(true);
@@ -57,11 +56,20 @@ const fetchLastSeasonAnime = async () => {
   lastSeasonPending.value = true;
   lastSeasonError.value = false;
 
-  const url = `${env.public.API_URL}/api/${env.public.version}/season/${getPreviousSeason()}/${new Date().getFullYear()}`;
+  const apiUrl = 'https://api.anisync.online';
+  const season = getPreviousSeason();
+  const year = new Date().getFullYear();
+  const url = `${apiUrl}/api/v2/season/${season}/${year}`;
 
   try {
     const response = await fetch(url);
     const data = await response.json();
+
+    if (!Array.isArray(data.results)) {
+      throw new Error('Unexpected data format');
+    }
+
+    // Filter out only the anime which are currently releasing
     lastSeasonData.value = data.results.filter(anime => anime.status === 'RELEASING');
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -252,21 +260,14 @@ const {
     </v-col>
 
     
-    <v-col>
-    <h1>Currently Airing</h1>
-    <div v<v-col>
+  <v-col>
     <h1>Currently Airing</h1>
     <div v-if="lastSeasonPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
     </div>
     <div v-else-if="lastSeasonError">
-      <v-alert
-        dense
-        type="error"
-        title="Error"
-        text="Error loading previous season anime!"
-      />
-      <v-btn @click="lastSeasonRefresh">
+      <v-alert dense type="error" title="Error" text="Error loading previous season anime!" />
+      <v-btn @click="fetchLastSeasonAnime">
         Reload?
         <v-icon>mdi-reload</v-icon>
       </v-btn>
@@ -275,19 +276,18 @@ const {
       <div class="grid">
         <div
           v-for="(anime, index) in lastSeasonData"
-          :key="index"
+          :key="anime.id"
           class="d-flex justify-center"
         >
-          <AnimeCard
-            :id="anime.id"
-            :title="anime.title.userPreferred"
-            :imgsrc="anime.coverImage.large"
-            :anime-color="anime.coverImage.color"
-            :year="anime.seasonYear"
-            :type="anime.format"
-            :total-ep="anime.episodes"
-            :status="anime.status"
-          />
+          <div class="anime-card" :style="{ backgroundColor: anime.coverImage.color || '#fff' }">
+            <img :src="anime.coverImage.large" :alt="anime.title.userPreferred" class="anime-card-img" />
+            <div class="anime-card-info">
+              <h3>{{ anime.title.userPreferred }}</h3>
+              <p>{{ anime.seasonYear }} - {{ anime.format }}</p>
+              <p>Episodes: {{ anime.episodes }}</p>
+              <p>Status: {{ anime.status }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </v-container>
@@ -547,5 +547,23 @@ const {
   padding: 2.5rem;
   height: 320px;
   gap: 1rem;
+}
+
+  .anime-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 200px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 10px;
+}
+
+.anime-card-img {
+  width: 100%;
+  height: auto;
+}
+
+.anime-card-info {
+  padding: 16px;
 }
 </style>
