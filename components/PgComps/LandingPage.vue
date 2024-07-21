@@ -24,45 +24,63 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
-const getPreviousSeason = () => {
-  const today = new Date();
-  const month = today.getMonth();
-  const seasons = {
-    0: "Winter",
-    1: "Winter",
-    2: "Spring",
-    3: "Spring",
-    4: "Summer",
-    5: "Summer",
-    6: "Fall",
-    7: "Fall",
-    8: "Fall",
-    9: "Fall",
-    10: "Winter",
-    11: "Winter",
-  };
+export default {
+  data() {
+    return {
+      lastSeasonData: [],
+      lastSeasonPending: true,
+      lastSeasonError: false,
+    };
+  },
+  methods: {
+    getPreviousSeason() {
+      const today = new Date();
+      const month = today.getMonth();
+      const seasons = {
+        0: "Winter",
+        1: "Winter",
+        2: "Spring",
+        3: "Spring",
+        4: "Summer",
+        5: "Summer",
+        6: "Fall",
+        7: "Fall",
+        8: "Fall",
+        9: "Fall",
+        10: "Winter",
+        11: "Winter",
+      };
 
-  // Determine the current season
-  const currentSeason = seasons[month].toUpperCase();
-  
-  // Determine the previous month and its corresponding season
-  const lastMonth = month === 0 ? 11 : month - 1;
-  const lastSeason = seasons[lastMonth].toUpperCase();
+      const lastMonth = month === 0 ? 11 : month - 1;
+      const lastSeason = seasons[lastMonth].toUpperCase();
 
-  return lastSeason;
-};
+      return lastSeason;
+    },
+    async fetchLastSeasonAnime() {
+      this.lastSeasonPending = true;
+      this.lastSeasonError = false;
 
-const {
-  data: lastSeasonData,
-  pending: lastSeasonPending,
-  refresh: lastSeasonRefresh,
-  error: lastSeasonError,
-} = useFetch(
-  `${env.public.API_URL}/api/${env.public.version}/season/${getPreviousSeason()}/${new Date().getFullYear()}?limit=70`,
-  {
-    cache: "force-cache",
+      const url = `${env.public.API_URL}/api/${env.public.version}/season/${this.getPreviousSeason()}/${new Date().getFullYear()}?limit=70`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        this.lastSeasonData = data.results.filter(anime => anime.status === 'RELEASING');
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        this.lastSeasonError = true;
+      } finally {
+        this.lastSeasonPending = false;
+      }
+    },
+    lastSeasonRefresh() {
+      this.fetchLastSeasonAnime();
+    }
+  },
+  mounted() {
+    this.fetchLastSeasonAnime();
   }
-);
+};
 
 const {
   data: trendingData,
