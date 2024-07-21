@@ -568,7 +568,7 @@ const formatStringDate = (year, month, day) => {
     </div>
     </v-card>
     </v-col>
-</container>
+</v-container>
     
 <v-container>  
     <v-row>
