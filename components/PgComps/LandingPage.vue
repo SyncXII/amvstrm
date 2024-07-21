@@ -266,7 +266,12 @@ const {
       <v-progress-circular :size="45" indeterminate />
     </div>
     <div v-else-if="lastSeasonError">
-      <v-alert dense type="error" title="Error" text="Error loading previous season anime!" />
+      <v-alert
+        dense
+        type="error"
+        title="Error"
+        text="Error loading previous season anime!"
+      />
       <v-btn @click="fetchLastSeasonAnime">
         Reload?
         <v-icon>mdi-reload</v-icon>
@@ -279,7 +284,7 @@ const {
           :key="anime.id"
           class="d-flex justify-center"
         >
-          <div class="anime-card" :style="{ backgroundColor: anime.coverImage.color || '#fff' }">
+          <div class="anime-card">
             <img :src="anime.coverImage.large" :alt="anime.title.userPreferred" class="anime-card-img" />
             <div class="anime-card-info">
               <h3>{{ anime.title.userPreferred }}</h3>
@@ -547,5 +552,24 @@ const {
   padding: 2.5rem;
   height: 320px;
   gap: 1rem;
+}
+
+  /* Assuming your original styles are similar, use the same styles for consistency */
+.anime-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 200px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 10px;
+}
+
+.anime-card-img {
+  width: 100%;
+  height: auto;
+}
+
+.anime-card-info {
+  padding: 16px;
 }
 </style>
