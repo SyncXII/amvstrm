@@ -24,63 +24,54 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
-export default {
-  data() {
-    return {
-      lastSeasonData: [],
-      lastSeasonPending: true,
-      lastSeasonError: false,
-    };
-  },
-  methods: {
-    getPreviousSeason() {
-      const today = new Date();
-      const month = today.getMonth();
-      const seasons = {
-        0: "Winter",
-        1: "Winter",
-        2: "Spring",
-        3: "Spring",
-        4: "Summer",
-        5: "Summer",
-        6: "Fall",
-        7: "Fall",
-        8: "Fall",
-        9: "Fall",
-        10: "Winter",
-        11: "Winter",
-      };
+import { ref, onMounted } from 'vue';
+import AnimeCard from './AnimeCard.vue';
 
-      const lastMonth = month === 0 ? 11 : month - 1;
-      const lastSeason = seasons[lastMonth].toUpperCase();
+const lastSeasonData = ref([]);
+const lastSeasonPending = ref(true);
+const lastSeasonError = ref(false);
 
-      return lastSeason;
-    },
-    async fetchLastSeasonAnime() {
-      this.lastSeasonPending = true;
-      this.lastSeasonError = false;
+const getPreviousSeason = () => {
+  const today = new Date();
+  const month = today.getMonth();
+  const seasons = {
+    0: "Winter",
+    1: "Winter",
+    2: "Spring",
+    3: "Spring",
+    4: "Summer",
+    5: "Summer",
+    6: "Fall",
+    7: "Fall",
+    8: "Fall",
+    9: "Fall",
+    10: "Winter",
+    11: "Winter",
+  };
 
-      const url = `${env.public.API_URL}/api/${env.public.version}/season/${this.getPreviousSeason()}/${new Date().getFullYear()}?limit=70`;
+  const lastMonth = month === 0 ? 11 : month - 1;
+  return seasons[lastMonth].toUpperCase();
+};
 
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        this.lastSeasonData = data.results.filter(anime => anime.status === 'RELEASING');
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        this.lastSeasonError = true;
-      } finally {
-        this.lastSeasonPending = false;
-      }
-    },
-    lastSeasonRefresh() {
-      this.fetchLastSeasonAnime();
-    }
-  },
-  mounted() {
-    this.fetchLastSeasonAnime();
+const fetchLastSeasonAnime = async () => {
+  lastSeasonPending.value = true;
+  lastSeasonError.value = false;
+
+  const url = `${env.public.API_URL}/api/${env.public.version}/season/${getPreviousSeason()}/${new Date().getFullYear()}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    lastSeasonData.value = data.results.filter(anime => anime.status === 'RELEASING');
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    lastSeasonError.value = true;
+  } finally {
+    lastSeasonPending.value = false;
   }
 };
+
+onMounted(fetchLastSeasonAnime);
 
 const {
   data: trendingData,
