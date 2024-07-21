@@ -553,336 +553,342 @@ const formatStringDate = (year, month, day) => {
         </div>
       </v-container>
     </v-card>
-    <v-container>
-      <v-row>
-        <v-col cols="12" lg="3" md="4" sm="12">
-          <ClientOnly>
-            <v-card class="mb-2">
-              <v-list lines="two">
-                <v-list-subheader> Episode release date </v-list-subheader>
-                <v-list-item
-                  v-if="anime?.nextair"
-                  :title="`New episode on ${getAiringDay()}`"
-                  :subtitle="countdown"
-                />
-                <v-list-item
-                  v-else
-                  title="Episode is"
-                  :subtitle="
-                    anime?.status === 'FINISHED'
-                      ? 'Finished'
-                      : anime?.status === 'NOT_YET_RELEASED'
-                      ? 'Not yet released'
-                      : anime?.status === 'CANCELLED'
-                      ? 'Cancelled'
-                      : 'No data'
-                  "
-                />
-              </v-list>
-            </v-card>
-          </ClientOnly>
 
-          <v-col cols="12">
-            <v-row justify="center">
-                <v-col cols="12" sm="10" md="8" lg="6" xl="4">
-                    <div class="pa-5" style="background-color: #212121">
-                        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
-                            <div id="frame" style="max-width: 728px; width: 100%;">
-                                <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
-                                <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
-                            </div>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
+<v-container>
+  <v-row>
+    <!-- Ad Container at the top -->
+    <v-col cols="12">
+      <v-row justify="center">
+        <v-col cols="12" sm="10" md="8" lg="6" xl="4">
+          <div class="pa-5" style="background-color: #212121">
+            <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+              <div id="frame" style="max-width: 728px; width: 100%;">
+                <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+                <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
+              </div>
+            </div>
+          </div>
         </v-col>
-          
-          <v-card>
-            <v-list lines="two">
-              <v-list-subheader> Info </v-list-subheader>
-              <v-list-item
-                title="Episode"
-                :subtitle="
-                  anime?.nextair
-                    ? `Current : ${
-                        anime?.nextair.episode === 1
-                          ? anime?.nextair.episode
-                          : anime?.nextair.episode - 1
-                      } / Est : ${
-                        anime?.episodes ? anime?.episodes : 'No data'
-                      }`
-                    : anime?.episodes
-                    ? anime?.episodes
-                    : 'No data'
-                "
-              />
+      </v-row>
+    </v-col>
+  </v-row>
 
-              <v-list-item
-                title="Score"
-                :subtitle="
-                  anime?.score.decimalScore !== 0
-                    ? anime?.score.decimalScore + ' / 10'
-                    : 'No Score'
-                "
-              />
-              <v-list-item title="Type" :subtitle="anime?.format" />
-              <v-list-item
-                title="Year"
-                :subtitle="anime?.year ? anime?.year : 'No EST'"
-              />
-              <v-list-item title="Season" :subtitle="anime?.season" />
-              <v-list-item
-                title="Duration"
-                :subtitle="
-                  anime?.duration
-                    ? anime?.duration >= 60
-                      ? Math.floor(anime?.duration / 60).toFixed(2) + ' hours'
-                      : anime?.duration + ' minutes'
-                    : 'No EST'
-                "
-              />
-              <v-list-item
-                title="Start Date"
-                :subtitle="
-                  anime?.startIn.year === null &&
-                  anime?.startIn.month === null &&
-                  anime?.startIn.day === null
-                    ? 'No EST'
-                    : formatStringDate(
-                        anime?.startIn.year,
-                        anime?.startIn.month,
-                        anime?.startIn.day
-                      )
-                "
-              />
-              <v-list-item
-                title="End Date"
-                :subtitle="
-                  anime?.endIn.year === null &&
-                  anime?.endIn.month === null &&
-                  anime?.endIn.day === null
-                    ? 'No EST'
-                    : formatStringDate(
-                        anime?.endIn.year,
-                        anime?.endIn.month,
-                        anime?.endIn.day
-                      )
-                "
-              />
-              <v-list-item title="Studios">
-                <template #default>
-                  <v-chip
-                    v-for="(d, i) in anime?.studios"
-                    :key="i"
-                    class="my-1 mr-1"
-                    label=""
-                  >
-                    {{ d.name }}
-                  </v-chip>
-                </template>
-              </v-list-item>
-              <v-list-item title="Genres">
-                <template #default>
-                  <v-chip
-                    v-for="(d, i) in anime?.genres"
-                    :key="i"
-                    class="my-1 mr-1"
-                    :to="'/search?genres=' + d"
-                    label=""
-                  >
-                    {{ d }}
-                  </v-chip>
-                </template>
-              </v-list-item>
-              <v-list-item title="Tags">
-                <template #default>
-                  <v-chip
-                    v-for="(d, i) in anime?.tags"
-                    :key="i"
-                    class="my-1 mr-1"
-                    :to="'/search?tags=' + d.name"
-                    label=""
-                  >
-                    {{ d.name }}
-                  </v-chip>
-                </template>
-              </v-list-item>
-            </v-list>
+  <v-row>
+    <v-col cols="12" lg="3" md="4" sm="12">
+      <ClientOnly>
+        <v-card class="mb-2">
+          <v-list lines="two">
+            <v-list-subheader> Episode release date </v-list-subheader>
+            <v-list-item
+              v-if="anime?.nextair"
+              :title="`New episode on ${getAiringDay()}`"
+              :subtitle="countdown"
+            />
+            <v-list-item
+              v-else
+              title="Episode is"
+              :subtitle="
+                anime?.status === 'FINISHED'
+                  ? 'Finished'
+                  : anime?.status === 'NOT_YET_RELEASED'
+                  ? 'Not yet released'
+                  : anime?.status === 'CANCELLED'
+                  ? 'Cancelled'
+                  : 'No data'
+              "
+            />
+          </v-list>
+        </v-card>
+      </ClientOnly>
+      
+      <v-card>
+        <v-list lines="two">
+          <v-list-subheader> Info </v-list-subheader>
+          <v-list-item
+            title="Episode"
+            :subtitle="
+              anime?.nextair
+                ? `Current : ${
+                    anime?.nextair.episode === 1
+                      ? anime?.nextair.episode
+                      : anime?.nextair.episode - 1
+                  } / Est : ${
+                    anime?.episodes ? anime?.episodes : 'No data'
+                  }`
+                : anime?.episodes
+                ? anime?.episodes
+                : 'No data'
+            "
+          />
+          <v-list-item
+            title="Score"
+            :subtitle="
+              anime?.score.decimalScore !== 0
+                ? anime?.score.decimalScore + ' / 10'
+                : 'No Score'
+            "
+          />
+          <v-list-item title="Type" :subtitle="anime?.format" />
+          <v-list-item
+            title="Year"
+            :subtitle="anime?.year ? anime?.year : 'No EST'"
+          />
+          <v-list-item title="Season" :subtitle="anime?.season" />
+          <v-list-item
+            title="Duration"
+            :subtitle="
+              anime?.duration
+                ? anime?.duration >= 60
+                  ? Math.floor(anime?.duration / 60).toFixed(2) + ' hours'
+                  : anime?.duration + ' minutes'
+                : 'No EST'
+            "
+          />
+          <v-list-item
+            title="Start Date"
+            :subtitle="
+              anime?.startIn.year === null &&
+              anime?.startIn.month === null &&
+              anime?.startIn.day === null
+                ? 'No EST'
+                : formatStringDate(
+                    anime?.startIn.year,
+                    anime?.startIn.month,
+                    anime?.startIn.day
+                  )
+            "
+          />
+          <v-list-item
+            title="End Date"
+            :subtitle="
+              anime?.endIn.year === null &&
+              anime?.endIn.month === null &&
+              anime?.endIn.day === null
+                ? 'No EST'
+                : formatStringDate(
+                    anime?.endIn.year,
+                    anime?.endIn.month,
+                    anime?.endIn.day
+                  )
+            "
+          />
+          <v-list-item title="Studios">
+            <template #default>
+              <v-chip
+                v-for="(d, i) in anime?.studios"
+                :key="i"
+                class="my-1 mr-1"
+                label=""
+              >
+                {{ d.name }}
+              </v-chip>
+            </template>
+          </v-list-item>
+          <v-list-item title="Genres">
+            <template #default>
+              <v-chip
+                v-for="(d, i) in anime?.genres"
+                :key="i"
+                class="my-1 mr-1"
+                :to="'/search?genres=' + d"
+                label=""
+              >
+                {{ d }}
+              </v-chip>
+            </template>
+          </v-list-item>
+          <v-list-item title="Tags">
+            <template #default>
+              <v-chip
+                v-for="(d, i) in anime?.tags"
+                :key="i"
+                class="my-1 mr-1"
+                :to="'/search?tags=' + d.name"
+                label=""
+              >
+                {{ d.name }}
+              </v-chip>
+            </template>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </v-col>
+    
+    <v-col cols="12" lg="9" md="8" sm="12">
+      <v-row>
+        <v-col cols="12">
+          <v-card>
+            <v-card-title>Description</v-card-title>
+            <v-card-text>
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div v-html="anime?.description" />
+            </v-card-text>
+          </v-card>
+        </v-col>
+
+        <!-- Ad Container in the middle -->
+        <v-col cols="12">
+          <v-row justify="center">
+            <v-col cols="12" sm="10" md="8" lg="6" xl="4">
+              <div class="pa-5" style="background-color: #212121">
+                <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+                  <div id="frame" style="max-width: 728px; width: 100%;">
+                    <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+                    <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
+                  </div>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+        
+        <v-col cols="12">
+          <v-card>
+            <v-tabs v-model="infotab">
+              <v-tab value="related"> Relation </v-tab>
+              <v-tab value="recomd"> Recommendations </v-tab>
+            </v-tabs>
+            <v-card-text>
+              <v-window v-model="infotab">
+                <v-window-item value="related">
+                  <v-list lines="three">
+                    <v-list-item
+                      v-if="
+                        anime.relation.filter(
+                          (item) => item.type !== 'MANGA'
+                        ).length == 0
+                      "
+                      title="No relation"
+                      subtitle="Not available by Anilist"
+                    />
+                    <v-list-item
+                      v-for="(item, i) in anime.relation.filter(
+                        (item) => item.type !== 'MANGA'
+                      )"
+                      v-else
+                      :key="i"
+                      :title="item.title.userPreferred"
+                      :subtitle="`Episode ${item.episodes} / ${
+                        item.status === 'FINISHED'
+                          ? 'Finished'
+                          : item?.status === 'RELEASING'
+                          ? 'Currently Releasing'
+                          : item?.status === 'NOT_YET_RELEASED'
+                          ? 'Not Released'
+                          : item?.status === 'CANCELLED'
+                          ? 'Cancelled'
+                          : 'No data'
+                      }`"
+                      :to="(!/\/pwa\.*/.test(useRoute().path)
+                                    ? '/anime/'
+                                    : '/pwa/anime/') + item.id"
+                    >
+                      <template #prepend>
+                        <v-img
+                          class="mr-5"
+                          style="
+                            border-radius: 4px;
+                            width: 60px;
+                            height: 10%;
+                          "
+                          :src="item.coverImage.large"
+                        />
+                      </template>
+                      <template #append>
+                        <div
+                          class="d-flex"
+                          style="gap: 0.2rem; margin: 0 1rem"
+                        >
+                          <v-icon color="yellow"> mdi-star </v-icon>
+                          {{ item.averageScore / 10 }}
+                        </div>
+                      </template>
+                    </v-list-item>
+                  </v-list>
+                </v-window-item>
+                <v-window-item value="recomd">
+                  <v-list lines="three">
+                    <v-list-item v-if="recmedPending">
+                      <v-row>
+                        <v-col class="justify-center">
+                          <v-progress-circular :size="40" indeterminate />
+                        </v-col>
+                      </v-row>
+                    </v-list-item>
+                    <v-list-item
+                      v-else-if="recmedAnime.results.length == 0"
+                      title="No Recommendations"
+                      subtitle="Not available by anilist"
+                    />
+                    <v-list-item
+                      v-for="(item, i) in recmedAnime.results"
+                      v-else
+                      :key="i"
+                      :title="item.title.userPreferred"
+                      :subtitle="`Episode ${item.episodes} / ${
+                        item.status === 'FINISHED'
+                          ? 'Finished'
+                          : item?.status === 'RELEASING'
+                          ? 'Currently Releasing'
+                          : item?.status === 'NOT_YET_RELEASED'
+                          ? 'Not Released'
+                          : item?.status === 'CANCELLED'
+                          ? 'Cancelled'
+                          : 'No data'
+                      }`"
+                      :to="(!/\/pwa\.*/.test(useRoute().path)
+                                    ? '/anime/'
+                                    : '/pwa/anime/') + item.id"
+                    >
+                      <template #prepend>
+                        <v-img
+                          class="mr-5"
+                          style="
+                            border-radius: 4px;
+                            width: 60px;
+                            height: 10%;
+                          "
+                          :src="item.coverImage.large"
+                        />
+                      </template>
+                      <template #append>
+                        <div
+                          class="d-flex"
+                          style="gap: 0.2rem; margin: 0 1rem"
+                        >
+                          <v-icon color="yellow"> mdi-star </v-icon>
+                          {{ item.averageScore / 10 }}
+                        </div>
+                      </template>
+                    </v-list-item>
+                  </v-list>
+                </v-window-item>
+              </v-window>
+            </v-card-text>
           </v-card>
         </v-col>
         
-        <v-col>
-          <v-row>
-            <v-col cols="12">
-              <v-card>
-                <v-card-title>Description</v-card-title>
-                <v-card-text>
-                  <!-- eslint-disable-next-line vue/no-v-html -->
-                  <div v-html="anime?.description" />
-                </v-card-text>
-              </v-card>
+        <!-- Ad Container at the bottom -->
+        <v-col cols="12">
+          <v-row justify="center">
+            <v-col cols="12" sm="10" md="8" lg="6" xl="4">
+              <div class="pa-5" style="background-color: #212121">
+                <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+                  <div id="frame" style="max-width: 728px; width: 100%;">
+                    <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+                    <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
+                  </div>
+                </div>
+              </div>
             </v-col>
-
-         <v-col cols="12">
-            <v-row justify="center">
-                <v-col cols="12" sm="10" md="8" lg="6" xl="4">
-                    <div class="pa-5" style="background-color: #212121">
-                        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
-                            <div id="frame" style="max-width: 728px; width: 100%;">
-                                <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
-                                <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
-                            </div>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
-        </v-col>
-            
-            <v-col>
-              <v-card>
-                <v-tabs v-model="infotab">
-                  <v-tab value="related"> Relation </v-tab>
-                  <v-tab value="recomd"> Recommendations </v-tab>
-                </v-tabs>
-                <v-card-text>
-                  <v-window v-model="infotab">
-                    <v-window-item value="related">
-                      <v-list lines="three">
-                        <v-list-item
-                          v-if="
-                            anime.relation.filter(
-                              (item) => item.type !== 'MANGA'
-                            ).length == 0
-                          "
-                          title="No relation"
-                          subtitle="Not available by Anilist"
-                        />
-                        <v-list-item
-                          v-for="(item, i) in anime.relation.filter(
-                            (item) => item.type !== 'MANGA'
-                          )"
-                          v-else
-                          :key="i"
-                          :title="item.title.userPreferred"
-                          :subtitle="`Episode ${item.episodes} / ${
-                            item.status === 'FINISHED'
-                              ? 'Finished'
-                              : item?.status === 'RELEASING'
-                              ? 'Currently Releasing'
-                              : item?.status === 'NOT_YET_RELEASED'
-                              ? 'Not Released'
-                              : item?.status === 'CANCELLED'
-                              ? 'Cancelled'
-                              : 'No data'
-                          }`"
-                          :to="(!/\/pwa\.*/.test(useRoute().path)
-                                        ? '/anime/'
-                                        : '/pwa/anime/') + item.id"
-                        >
-                          <template #prepend>
-                            <v-img
-                              class="mr-5"
-                              style="
-                                border-radius: 4px;
-                                width: 60px;
-                                height: 10%;
-                              "
-                              :src="item.coverImage.large"
-                            />
-                          </template>
-                          <template #append>
-                            <div
-                              class="d-flex"
-                              style="gap: 0.2rem; margin: 0 1rem"
-                            >
-                              <v-icon color="yellow"> mdi-star </v-icon>
-                              {{ item.averageScore / 10 }}
-                            </div>
-                          </template>
-                        </v-list-item>
-                      </v-list>
-                    </v-window-item>
-                    <v-window-item value="recomd">
-                      <v-list lines="three">
-                        <v-list-item v-if="recmedPending">
-                          <v-row>
-                            <v-col class="justify-center">
-                              <v-progress-circular :size="40" indeterminate />
-                            </v-col>
-                          </v-row>
-                        </v-list-item>
-                        <v-list-item
-                          v-else-if="recmedAnime.results.length == 0"
-                          title="No Recommendations"
-                          subtitle="Not available by anilist"
-                        />
-                        <v-list-item
-                          v-for="(item, i) in recmedAnime.results"
-                          v-else
-                          :key="i"
-                          :title="item.title.userPreferred"
-                          :subtitle="`Episode ${item.episodes} / ${
-                            item.status === 'FINISHED'
-                              ? 'Finished'
-                              : item?.status === 'RELEASING'
-                              ? 'Currently Releasing'
-                              : item?.status === 'NOT_YET_RELEASED'
-                              ? 'Not Released'
-                              : item?.status === 'CANCELLED'
-                              ? 'Cancelled'
-                              : 'No data'
-                          }`"
-                          :to="(!/\/pwa\.*/.test(useRoute().path)
-                                        ? '/anime/'
-                                        : '/pwa/anime/') + item.id"
-                        >
-                          <template #prepend>
-                            <v-img
-                              class="mr-5"
-                              style="
-                                border-radius: 4px;
-                                width: 60px;
-                                height: 10%;
-                              "
-                              :src="item.coverImage.large"
-                            />
-                          </template>
-                          <template #append>
-                            <div
-                              class="d-flex"
-                              style="gap: 0.2rem; margin: 0 1rem"
-                            >
-                              <v-icon color="yellow"> mdi-star </v-icon>
-                              {{ item.averageScore / 10 }}
-                            </div>
-                          </template>
-                        </v-list-item>
-                      </v-list>
-                    </v-window-item>
-                  </v-window>
-                </v-card-text>
-              </v-card>
-            </v-col>
-
-            <v-col cols="12">
-            <v-row justify="center">
-                <v-col cols="12" sm="10" md="8" lg="6" xl="4">
-                    <div class="pa-5" style="background-color: #212121">
-                        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
-                            <div id="frame" style="max-width: 728px; width: 100%;">
-                                <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
-                                <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
-                            </div>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
-        </v-col>
-            
           </v-row>
         </v-col>
+        
       </v-row>
-    </v-container>
+    </v-col>
+  </v-row>
+</v-container>
+    
   </div>
 </template>
 <style scoped>
