@@ -263,6 +263,8 @@ const {
     
     <v-col>
     <h1>Currently Airing</h1>
+    <div v<v-col>
+    <h1>Currently Airing</h1>
     <div v-if="lastSeasonPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
     </div>
@@ -273,7 +275,7 @@ const {
         title="Error"
         text="Error loading previous season anime!"
       />
-      <v-btn @click="lastSeasonRefresh()">
+      <v-btn @click="lastSeasonRefresh">
         Reload?
         <v-icon>mdi-reload</v-icon>
       </v-btn>
@@ -281,7 +283,7 @@ const {
     <v-container v-else fluid>
       <div class="grid">
         <div
-          v-for="(anime, index) in lastSeasonData?.results"
+          v-for="(anime, index) in lastSeasonData"
           :key="index"
           class="d-flex justify-center"
         >
