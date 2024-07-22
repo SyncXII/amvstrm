@@ -554,6 +554,19 @@ const formatStringDate = (year, month, day) => {
     </v-card>
     <v-container>
       <v-row>
+  <v-col cols="12">
+  <v-card>
+    <div class="pa-5" style="background-color: #212121">
+        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+            <div id="frame" style="max-width: 728px; width: 100%;">
+                <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+                <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
+            </div>
+        </div>
+    </div>
+  </v-card>
+</v-col>
+        
         <v-col cols="12" lg="3" md="4" sm="12">
           <ClientOnly>
             <v-card class="mb-2">
@@ -704,6 +717,22 @@ const formatStringDate = (year, month, day) => {
                 </v-card-text>
               </v-card>
             </v-col>
+
+        <!-- Middle Ad Container -->
+          <v-col cols="12">
+            <v-card>
+              <div class="pa-5" style="background-color: #212121">
+                  <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+                      <div id="frame" style="max-width: 728px; width: 100%;">
+                          <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+                          <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
+                      </div>
+                  </div>
+              </div>
+            </v-card>
+          </v-col>
+
+            
             <v-col>
               <v-card>
                 <v-tabs v-model="infotab">
@@ -829,6 +858,21 @@ const formatStringDate = (year, month, day) => {
                 </v-card-text>
               </v-card>
             </v-col>
+
+          <!-- Bottom Ad Container -->
+          <v-col cols="12">
+            <v-card>
+              <div class="pa-5" style="background-color: #212121">
+                  <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+                      <div id="frame" style="max-width: 728px; width: 100%;">
+                          <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+                          <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
+                      </div>
+                  </div>
+              </div>
+            </v-card>
+          </v-col>
+            
           </v-row>
         </v-col>
       </v-row>
