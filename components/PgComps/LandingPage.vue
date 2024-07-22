@@ -2,7 +2,7 @@
 import { useStorage } from "@vueuse/core";
 
 import { ref, computed } from 'vue';
-import { useFetch } from '@nuxt/composition-api';
+import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
   
 const env = useRuntimeConfig();
 
@@ -63,23 +63,25 @@ const fetchLastSeasonData = async () => {
 
   console.log('Fetching data from URL:', url); // Log the request URL
   
-  const { data, error, refresh } = await useFetch(url);
-  if (error.value) {
-    console.error('Error fetching data:', error.value); // Log any errors
-    lastSeasonError.value = true;
-  } else {
+  try {
+    const { data, error } = await useFetch(url);
+    if (error.value) {
+      throw new Error(error.value);
+    }
     console.log('API response:', data.value); // Log the raw response data
     lastSeasonData.value = data.value.results.filter(anime => anime.status === 'RELEASING');
     console.log('Filtered data (RELEASING):', lastSeasonData.value); // Log the filtered results
+  } catch (error) {
+    console.error('Error fetching data:', error.message); // Log any errors
+    lastSeasonError.value = true;
+  } finally {
+    lastSeasonPending.value = false;
   }
-  lastSeasonPending.value = false;
 };
 
 fetchLastSeasonData();
 
-const currentlyAiring = computed(() => {
-  return lastSeasonData.value || [];
-});
+const currentlyAiring = computed(() => lastSeasonData.value || []);
 
 const {
   data: trendingData,
