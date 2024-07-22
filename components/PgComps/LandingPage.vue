@@ -200,8 +200,7 @@ const {
   <!-- DESKTOP DEVICE -->
   <v-container class="d-lg-block d-sm-none d-none" fluid>
 
-<v-col cols="12">
-  <v-card>
+<v-container>
     <div class="pa-5" style="background-color: #212121">
         <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
             <div id="frame" style="max-width: 728px; width: 100%;">
@@ -210,8 +209,7 @@ const {
             </div>
         </div>
     </div>
-  </v-card>
-</v-col>
+  </v-container>
 
     <v-col>
       <h1>Trending Anime</h1>
