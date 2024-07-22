@@ -200,7 +200,7 @@ const {
   </v-container>
   <!-- DESKTOP DEVICE -->
   <!-- Ad Container -->
-    <v-container fluid>
+    <v-container class="common-container">
       <v-col cols="12">
       <v-card>
         <div class="pa-5" style="background-color: #212121">
@@ -679,5 +679,11 @@ const {
   height: 320px;
   gap: 1rem;
 }
+
+.common-container {
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+  }
 
 </style>
