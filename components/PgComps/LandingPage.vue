@@ -201,18 +201,18 @@ const {
   <!-- DESKTOP DEVICE -->
   <!-- Ad Container -->
   <v-container>
-    <v-row>
+    <v-row justify="center">
       <v-col cols="12">
         <v-card class="pa-5" style="background-color: #212121;">
           <div id="ad-container" class="d-flex justify-center align-center" style="box-sizing: border-box; width: 100%;">
-            <div id="frame" class="d-flex justify-center" style="width: 728px;">
+            <div id="frame" class="d-flex flex-column align-items-center" style="width: 728px; max-width: 100%;">
               <iframe
                 data-aa="2340453"
                 src="//ad.a-ads.com/2340453?size=728x90&background_color=000000"
                 style="width: 728px; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"
               ></iframe>
+              <a id="frame-link" class="d-block text-center mt-2" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
             </div>
-            <a id="frame-link" class="d-block text-right" style="font-size: 12px; width: 728px;" href="https://aads.com/?partner=2340453">Advertise here</a>
           </div>
         </v-card>
       </v-col>
