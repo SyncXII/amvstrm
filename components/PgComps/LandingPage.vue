@@ -68,11 +68,11 @@ const fetchLastSeasonData = async () => {
     if (error.value) {
       throw new Error(error.value);
     }
-    console.log('API response:', data.value); // Log the raw response data
+    // console.log('API response:', data.value); // Log the raw response data
     lastSeasonData.value = data.value.results.filter(anime => anime.status === 'RELEASING');
-    console.log('Filtered data (RELEASING):', lastSeasonData.value); // Log the filtered results
+    // console.log('Filtered data (RELEASING):', lastSeasonData.value); // Log the filtered results
   } catch (error) {
-    console.error('Error fetching data:', error.message); // Log any errors
+    // console.error('Error fetching data:', error.message); // Log any errors
     lastSeasonError.value = true;
   } finally {
     lastSeasonPending.value = false;
@@ -538,7 +538,7 @@ const {
       </v-row>
     </v-container>
     
-    <h2 class="mt-10">Currently Airing</h2>
+  <h2 class="mt-10">Currently Airing</h2>
     <div v-if="lastSeasonPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
     </div>
@@ -549,14 +549,14 @@ const {
         title="Error"
         text="Error loading previous season anime!"
       />
-      <v-btn @click="lastSeasonRefresh()">
+      <v-btn @click="lastSeasonRefresh">
         Reload?
         <v-icon>mdi-reload</v-icon>
       </v-btn>
     </div>
     <v-row v-else>
       <v-col class="media-scrolling">
-        <div v-for="d in lastSeasonData?.results" :key="d.id">
+        <div v-for="d in currentlyAiring" :key="d.id">
           <AnimeCard
             :id="d.id"
             :title="d.title.userPreferred"
