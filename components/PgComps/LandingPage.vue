@@ -196,11 +196,9 @@ const {
         </v-alert>
       </div>
     </ClientOnly>
-  </v-container>
-  <!-- DESKTOP DEVICE -->
-  <v-container class="d-lg-block d-sm-none d-none" fluid>
 
-<v-container>
+    <!-- Ad Container -->
+    <v-card>
     <div class="pa-5" style="background-color: #212121">
         <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
             <div id="frame" style="max-width: 728px; width: 100%;">
@@ -209,7 +207,11 @@ const {
             </div>
         </div>
     </div>
+    </v-card>
+
   </v-container>
+  <!-- DESKTOP DEVICE -->
+  <v-container class="d-lg-block d-sm-none d-none" fluid>
 
     <v-col>
       <h1>Trending Anime</h1>
@@ -251,18 +253,19 @@ const {
       </v-container>
     </v-col>
 
-    <v-col cols="12">
-  <v-card>
-    <div class="pa-5" style="background-color: #212121">
-        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+    <!-- Ad Container -->
+    <v-container>
+      <v-card>
+        <div class="pa-5" style="background-color: #212121">
+          <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
             <div id="frame" style="max-width: 728px; width: 100%;">
                 <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
                 <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
             </div>
+          </div>
         </div>
-    </div>
-  </v-card>
-</v-col>
+      </v-card>
+    </v-container>
     
     <v-col>
     <h1>Currently Airing</h1>
@@ -303,18 +306,19 @@ const {
     </v-container>
   </v-col>
     
-    <v-col cols="12">
-  <v-card>
-    <div class="pa-5" style="background-color: #212121">
-        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+    <!-- Ad Container -->
+    <v-container>
+      <v-card>
+        <div class="pa-5" style="background-color: #212121">
+          <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
             <div id="frame" style="max-width: 728px; width: 100%;">
                 <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
                 <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
             </div>
+          </div>
         </div>
-    </div>
-  </v-card>
-</v-col>
+      </v-card>
+    </v-container>
     
     <v-col>
       <h1>Upcoming Anime : {{ getSeason() }}</h1>
@@ -355,18 +359,19 @@ const {
       </v-container>
     </v-col>
     
-    <v-col cols="12">
-  <v-card>
-    <div class="pa-5" style="background-color: #212121">
-        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+    <!-- Ad Container -->
+    <v-container>
+      <v-card>
+        <div class="pa-5" style="background-color: #212121">
+          <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
             <div id="frame" style="max-width: 728px; width: 100%;">
                 <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
                 <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
             </div>
+          </div>
         </div>
-    </div>
-  </v-card>
-</v-col>
+      </v-card>
+    </v-container>
      
     <v-col>
       <h1>Popular Anime</h1>
@@ -407,25 +412,26 @@ const {
       </v-container>
     </v-col>
 
-  <v-col cols="12">
-  <v-card>
-    <div class="pa-5" style="background-color: #212121">
-        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+    <!-- Ad Container -->
+    <v-container>
+      <v-card>
+        <div class="pa-5" style="background-color: #212121">
+          <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
             <div id="frame" style="max-width: 728px; width: 100%;">
                 <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
                 <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
             </div>
+          </div>
         </div>
-    </div>
-  </v-card>
-</v-col>
+      </v-card>
+    </v-container>
     
   </v-container>
   
   <!-- MOBILE DEVICE -->
   <v-container class="d-lg-none d-sm-block d-xs mb-5" fluid>
 
-<v-col cols="12">
+<!-- Ad Container -->
   <v-card>
     <div class="pa-5" style="background-color: #212121">
         <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
@@ -436,7 +442,6 @@ const {
         </div>
     </div>
   </v-card>
-</v-col>
 
     <h2>Trending Anime</h2>
     <div v-if="trpend" class="loadingBlock">
@@ -470,6 +475,18 @@ const {
         </div>
       </v-col>
     </v-row>
+
+    <!-- Ad Container -->
+  <v-card>
+    <div class="pa-5" style="background-color: #212121">
+        <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
+            <div id="frame" style="max-width: 728px; width: 100%;">
+                <iframe data-aa="2340453" src="//ad.a-ads.com/2340453?size=728x90&background_color=000000" style="width: 100%; height: 90px; border: 0; padding: 0; overflow: hidden; background-color: transparent;"></iframe>
+                <a id="frame-link" class="d-block text-right" style="font-size: 12px;" href="https://aads.com/?partner=2340453">Advertise here</a>
+            </div>
+        </div>
+    </div>
+  </v-card>
 
     
     <h2 class="mt-10">Currently Airing</h2>
@@ -505,7 +522,7 @@ const {
       </v-col>
     </v-row>
     
-    <v-col cols="12">
+    <!-- Ad Container -->
   <v-card>
     <div class="pa-5" style="background-color: #212121">
         <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
@@ -516,7 +533,6 @@ const {
         </div>
     </div>
   </v-card>
-</v-col>
     
     <h2 class="mt-10">Upcoming Anime : {{ getSeason() }}</h2>
     <div v-if="seaspend" class="loadingBlock">
@@ -551,7 +567,7 @@ const {
       </v-col>
     </v-row>
 
-    <v-col cols="12">
+    <!-- Ad Container -->
   <v-card>
     <div class="pa-5" style="background-color: #212121">
         <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
@@ -562,7 +578,6 @@ const {
         </div>
     </div>
   </v-card>
-</v-col>
 
   
     <h2 class="mt-10">Popular Anime</h2>
@@ -598,7 +613,7 @@ const {
       </v-col>
     </v-row>
 
-   <v-col cols="12">
+   <!-- Ad Container -->
   <v-card>
     <div class="pa-5" style="background-color: #212121">
         <div id="ad-container" class="d-flex justify-center align-center pa-2" style="width: 100%; box-sizing: border-box;">
@@ -609,7 +624,6 @@ const {
         </div>
     </div>
   </v-card>
-</v-col>
     
   </v-container>
 </template>
