@@ -1,5 +1,9 @@
 <script setup>
 import { useStorage } from "@vueuse/core";
+
+import { ref, computed } from 'vue';
+import { useFetch } from '@nuxt/composition-api';
+  
 const env = useRuntimeConfig();
 
 const history_state = useStorage("site-watch", {});
@@ -24,6 +28,10 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
+const lastSeasonData = ref(null);
+const lastSeasonPending = ref(true);
+const lastSeasonError = ref(false);
+
 const getPreviousSeason = () => {
   const today = new Date();
   const month = today.getMonth();
@@ -41,25 +49,37 @@ const getPreviousSeason = () => {
     10: "Winter",
     11: "Winter",
   };
-  // Determine the current season
-  const currentSeason = seasons[month].toUpperCase();
-  
-  // Determine the previous month and its corresponding season
   const lastMonth = month === 0 ? 11 : month - 1;
-  const lastSeason = seasons[lastMonth].toUpperCase();
-  return lastSeason;
+  return seasons[lastMonth].toUpperCase();
 };
-const {
-  data: lastSeasonData,
-  pending: lastSeasonPending,
-  refresh: lastSeasonRefresh,
-  error: lastSeasonError,
-} = useFetch(
-  `${env.public.API_URL}/api/${env.public.version}/season/${getPreviousSeason()}/${new Date().getFullYear()}?limit=200`,
-  {
-    cache: "force-cache",
+
+const fetchLastSeasonData = async () => {
+  lastSeasonPending.value = true;
+  lastSeasonError.value = false;
+
+  const previousSeason = getPreviousSeason();
+  const year = new Date().getFullYear();
+  const url = `${API_URL}/api/${VERSION}/season/${previousSeason}/${year}?limit=200`;
+
+  console.log('Fetching data from URL:', url); // Log the request URL
+  
+  const { data, error, refresh } = await useFetch(url);
+  if (error.value) {
+    console.error('Error fetching data:', error.value); // Log any errors
+    lastSeasonError.value = true;
+  } else {
+    console.log('API response:', data.value); // Log the raw response data
+    lastSeasonData.value = data.value.results.filter(anime => anime.status === 'RELEASING');
+    console.log('Filtered data (RELEASING):', lastSeasonData.value); // Log the filtered results
   }
-);
+  lastSeasonPending.value = false;
+};
+
+fetchLastSeasonData();
+
+const currentlyAiring = computed(() => {
+  return lastSeasonData.value || [];
+});
 
 const {
   data: trendingData,
@@ -301,7 +321,7 @@ const {
     <v-container v-else fluid>
       <div class="grid">
         <div
-          v-for="(anime, index) in lastSeasonData?.results"
+          v-for="(anime, index) in currentlyAiring"
           :key="index"
           class="d-flex justify-center"
         >
