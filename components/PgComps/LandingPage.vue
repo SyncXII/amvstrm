@@ -118,7 +118,7 @@ const {
 // );
 
 
-//SCHEDULE
+/* SCHEDULE
 
     const dataPerDay = ref([]);
     const dataPending = ref(true);
@@ -155,7 +155,7 @@ const {
 
     fetchDataForDay();
 
-    const airingToday = computed(() => dataPerDay.value || []);
+    const airingToday = computed(() => dataPerDay.value || []);*/
 
 const {
   data: seasonData,
@@ -372,9 +372,9 @@ const {
         </div>
       </div>
     </v-container>
-  </v-col>-->
+  </v-col>
 
-    <!-- SCHEDULE -->
+    <!-- SCHEDULE
       <v-col>
     <h1>Airing Today:</h1>
     <div v-if="dataPending" class="loadingBlock">
@@ -412,7 +412,7 @@ const {
         </div>
       </div>
     </v-container>
-  </v-col>
+  </v-col>-->
     
     <v-col>
     <h1>Currently Airing</h1>
