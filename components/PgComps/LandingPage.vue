@@ -104,7 +104,7 @@ const {
     cache: "force-cache",
   }
 );
-
+  
 // const {
 //   data: scheduleData,
 //   pending: schpend,
@@ -116,6 +116,60 @@ const {
 //     cache: "force-cache",
 //   }
 // );
+
+
+//SCHEDULE
+
+const dataPerDay = ref([]);
+const dataPending = ref(true);
+const dataError = ref(false);
+
+const getCurrentDay = () => {
+  const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  const today = new Date().getDay();
+  return days[today];
+};
+
+const fetchDataForDay = async () => {
+  dataPending.value = true;
+  dataError.value = false;
+
+  const currentDay = getCurrentDay();
+  const url = 'https://api.anify.tv/schedule';
+
+  console.log('Fetching data from URL:', url); // Log the request URL
+
+  try {
+    const { data, error } = await useFetch(url);
+    if (error.value) {
+      throw new Error(error.value);
+    }
+    // Assuming your API response is structured with days as keys
+    const scheduleData = data.value;
+    dataPerDay.value =
+      scheduleData[currentDay]?.filter(anime => anime.status === 'RELEASING') || [];
+  } catch (error) {
+    dataError.value = true;
+    console.error('Error fetching data:', error.message); // Log any errors
+  } finally {
+    dataPending.value = false;
+  }
+};
+
+fetchDataForDay();
+
+const airingToday = computed(() => dataPerDay.value || []);
+
+export default {
+  setup() {
+    return {
+      airingToday,
+      dataPending,
+      dataError,
+      fetchDataForDay,
+    };
+  }
+};
 
 const {
   data: seasonData,
@@ -333,6 +387,46 @@ const {
       </div>
     </v-container>
   </v-col>-->
+
+    <!-- SCHEDULE -->
+      <v-col>
+    <h1>Airing Today:</h1>
+    <div v-if="dataPending" class="loadingBlock">
+      <v-progress-circular :size="45" indeterminate />
+    </div>
+    <div v-else-if="dataError">
+      <v-alert
+        dense
+        type="error"
+        title="Error"
+        text="Error loading today's anime schedule!"
+      />
+      <v-btn @click="fetchDataForDay">
+        Reload?
+        <v-icon>mdi-reload</v-icon>
+      </v-btn>
+    </div>
+    <v-container v-else fluid>
+      <div class="grid">
+        <div
+          v-for="(anime, index) in airingToday"
+          :key="index"
+          class="d-flex justify-center"
+        >
+          <AnimeCard
+            :id="anime.id"
+            :title="anime.title.userPreferred"
+            :imgsrc="anime.coverImage"
+            :anime-color="anime.color"
+            :year="anime.year"
+            :type="anime.format"
+            :total-ep="anime.totalEpisodes"
+            :status="anime.status"
+          />
+        </div>
+      </div>
+    </v-container>
+  </v-col>
     
     <v-col>
     <h1>Currently Airing</h1>
