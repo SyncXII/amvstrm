@@ -280,7 +280,7 @@ export default defineNuxtConfig({
       version: process.env.VERSION || "v2",
       posthogPublicKey: process.env.POSTHOG_PK || "phc_YtiSVvEpiFQia7T2e7UXVxCo2EqiinmnzrDlDFdxIwq",
       posthogHost: process.env.POSTHOG_HOST || "https://app.posthog.com",
-      disqus_id: process.env.DISQUS_ID,
+      disqus_id: process.env.DISQUS_ID || "https://anisync-your-ultimate-anime-streaming-experience.disqus.com/embed.js",
     },
   },
 
