@@ -102,7 +102,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
   ],
   disqus: {
-    shortname: process.env.DISQUS_ID,
+    shortname: process.env.DISQUS_ID || "anisync-your-ultimate-anime-streaming-experience",
   },
   pwa: {
     registerType: "autoUpdate",
