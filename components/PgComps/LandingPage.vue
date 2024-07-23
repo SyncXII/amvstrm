@@ -157,15 +157,6 @@ const {
 
     const airingToday = computed(() => dataPerDay.value || []);
 
-    return {
-      airingToday,
-      dataPending,
-      dataError,
-      fetchDataForDay,
-    };
-  },
-};
-
 const {
   data: seasonData,
   pending: seaspend,
