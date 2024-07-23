@@ -2,6 +2,8 @@
 import { useStorage } from "@vueuse/core";
 import { ref, computed, onMounted } from 'vue';
 import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
+import axios from 'axios';
+import AnimeCard from '@/components/AnimeCard.vue';
   
 const env = useRuntimeConfig();
 
@@ -83,88 +85,79 @@ fetchLastSeasonData();
 const currentlyAiring = computed(() => lastSeasonData.value || []);
 
 //Current Day
-// Reactive state
-const currentDayData = ref(null);
-const currentDayPending = ref(true);
-const currentDayError = ref(false);
+export default {
+  components: {
+    AnimeCard,
+  },
+  data() {
+    return {
+      currentDayName: this.getCurrentDayName(),
+      currentDayPending: true,
+      currentDayError: false,
+      currentDayData: [],
+    };
+  },
+  mounted() {
+    this.fetchScheduleForCurrentDay();
+  },
+  methods: {
+    async fetchScheduleForCurrentDay() {
+      this.currentDayPending = true;
+      this.currentDayError = false;
+      try {
+        const response = await axios.post('https://api.anify.tv/schedule', {
+          fields: [
+            "id",
+            "idMal",
+            "title",
+            "coverImage",
+            "bannerImage",
+            "mappings",
+            "description",
+            "countryOfOrigin",
+            "year",
+            "color",
+            "format",
+            "type",
+            "genres",
+            "tags",
+            "airingAt",
+            "aringEpisode",
+            "totalEpisode",
+            "season",
+            "status",
+            "currentEpisode",
+          ],
+          type: "anime",
+        });
 
-const daysOfWeek = [
-  'sunday',
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-];
+        const todayDayOfWeek = new Date().getUTCDay(); // get today's day of the week
+        this.currentDayName = this.getCurrentDayName(todayDayOfWeek);
 
-const getCurrentDay = () => {
-  const today = new Date();
-  return daysOfWeek[today.getDay()];
+        // Filter results based on today's day of the week
+        const filteredResults = response.data.filter((item) => {
+          const airingDate = new Date(item.airingAt * 1000); // assuming airingAt is a Unix timestamp in seconds
+          const dayOfWeek = airingDate.getUTCDate(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+          // Include only results airing today
+          return dayOfWeek === todayDayOfWeek;
+        });
+
+        this.currentDayData = filteredResults;
+      } catch (error) {
+        console.error('Error fetching schedule:', error);
+        this.currentDayError = true;
+      } finally {
+        this.currentDayPending = false;
+      }
+    },
+    getCurrentDayName(day = new Date().getUTCDay()) {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      return days[day];
+    },
+  },
 };
-
-// Computed property to get the name of the current day
-const currentDayName = computed(() => {
-  return getCurrentDay().charAt(0).toUpperCase() + getCurrentDay().slice(1);
-});
-
-const fetchScheduleForCurrentDay = async () => {
-  currentDayPending.value = true;
-  currentDayError.value = false;
-
-  const currentDay = getCurrentDay();
-  const url = `${process.env.NUXT_PUBLIC_API_URL}/schedule`;
-
-  console.log('Fetching data for:', currentDay); // Log the current day
-
-  try {
-    const { data, error } = await useFetch(url, {
-      method: 'POST',
-      body: {
-        fields: [
-          'id',
-          'idMal',
-          'title',
-          'coverImage',
-          'bannerImage',
-          'mappings',
-          'description',
-          'countryOfOrigin',
-          'year',
-          'color',
-          'format',
-          'type',
-          'genres',
-          'tags',
-          'airingAt',
-          'aringEpisode',
-          'totalEpisode',
-          'season',
-          'status',
-          'currentEpisode',
-        ],
-        type: 'anime',
-      },
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    if (error.value) {
-      throw new Error(error.value);
-    }
-    console.log('API response:', data.value); // Log the raw response data
-    currentDayData.value = data.value[currentDay];
-    console.log('Data for current day:', currentDayData.value); // Log filtered results for the current day
-  } catch (error) {
-    console.error('Error fetching data:', error.message); // Log any errors
-    currentDayError.value = true;
-  } finally {
-    currentDayPending.value = false;
-  }
-};
-
-// Fetch schedule when the component is mounted
-onMounted(fetchScheduleForCurrentDay);
-
+  
 const {
   data: trendingData,
   pending: trpend,
@@ -385,18 +378,15 @@ const {
       </v-row>
     </v-container>
 
-    <v-col>
+  <v-col>
     <h1>Airing Today : {{ currentDayName }}</h1>
     <div v-if="currentDayPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
     </div>
     <div v-else-if="currentDayError">
-      <v-alert
-        dense
-        type="error"
-        title="Error"
-        text="Error loading today's anime schedule!"
-      />
+      <v-alert dense type="error">
+        Error loading today's anime schedule!
+      </v-alert>
       <v-btn @click="fetchScheduleForCurrentDay">
         Reload?
         <v-icon>mdi-reload</v-icon>
@@ -404,11 +394,7 @@ const {
     </div>
     <v-container v-else fluid>
       <div class="grid">
-        <div
-          v-for="(anime, index) in currentDayData"
-          :key="anime.id"
-          class="d-flex justify-center"
-        >
+        <div v-for="(anime, index) in currentDayData" :key="anime.id" class="d-flex justify-center">
           <AnimeCard
             :id="anime.id"
             :title="anime.title.userPreferred"
@@ -423,7 +409,6 @@ const {
       </div>
     </v-container>
   </v-col>
-
     
     <v-col>
     <h1>Currently Airing</h1>
