@@ -120,55 +120,50 @@ const {
 
 //SCHEDULE
 
-const dataPerDay = ref([]);
-const dataPending = ref(true);
-const dataError = ref(false);
+    const dataPerDay = ref([]);
+    const dataPending = ref(true);
+    const dataError = ref(false);
 
-const getCurrentDay = () => {
-  const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-  const today = new Date().getDay();
-  return days[today];
-};
+    const getCurrentDay = () => {
+      const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+      const today = new Date().getDay();
+      return days[today];
+    };
 
-const fetchDataForDay = async () => {
-  dataPending.value = true;
-  dataError.value = false;
+    const fetchDataForDay = async () => {
+      dataPending.value = true;
+      dataError.value = false;
 
-  const currentDay = getCurrentDay();
-  const url = 'https://api.anify.tv/schedule';
+      const currentDay = getCurrentDay();
+      const url = 'https://api.anify.tv/schedule';
 
-  console.log('Fetching data from URL:', url); // Log the request URL
+      console.log('Fetching data from URL:', url); // Log the request URL
 
-  try {
-    const { data, error } = await useFetch(url);
-    if (error.value) {
-      throw new Error(error.value);
-    }
-    // Assuming your API response is structured with days as keys
-    const scheduleData = data.value;
-    dataPerDay.value =
-      scheduleData[currentDay]?.filter(anime => anime.status === 'RELEASING') || [];
-  } catch (error) {
-    dataError.value = true;
-    console.error('Error fetching data:', error.message); // Log any errors
-  } finally {
-    dataPending.value = false;
-  }
-};
+      try {
+        const response = await fetch(url);
+        const scheduleData = await response.json();
+        
+        dataPerDay.value =
+          scheduleData[currentDay]?.filter(anime => anime.status === 'RELEASING') || [];
+      } catch (error) {
+        dataError.value = true;
+        console.error('Error fetching data:', error.message); // Log any errors
+      } finally {
+        dataPending.value = false;
+      }
+    };
 
-fetchDataForDay();
+    fetchDataForDay();
 
-const airingToday = computed(() => dataPerDay.value || []);
+    const airingToday = computed(() => dataPerDay.value || []);
 
-export default {
-  setup() {
     return {
       airingToday,
       dataPending,
       dataError,
       fetchDataForDay,
     };
-  }
+  },
 };
 
 const {
