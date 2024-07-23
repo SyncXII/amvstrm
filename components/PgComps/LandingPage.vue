@@ -1,8 +1,7 @@
 <script setup>
 import { useStorage } from "@vueuse/core";
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
-import axios from 'axios';
   
 const env = useRuntimeConfig();
 
