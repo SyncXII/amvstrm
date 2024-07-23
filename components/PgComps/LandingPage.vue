@@ -3,7 +3,6 @@ import { useStorage } from "@vueuse/core";
 import { ref, computed, onMounted } from 'vue';
 import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
 import axios from 'axios';
-import AnimeCard from '@/components/AnimeCard.vue';
   
 const env = useRuntimeConfig();
 
@@ -83,80 +82,6 @@ const fetchLastSeasonData = async () => {
 fetchLastSeasonData();
 
 const currentlyAiring = computed(() => lastSeasonData.value || []);
-
-//Current Day
-export default {
-  components: {
-    AnimeCard,
-  },
-  data() {
-    return {
-      currentDayName: this.getCurrentDayName(),
-      currentDayPending: true,
-      currentDayError: false,
-      currentDayData: [],
-    };
-  },
-  mounted() {
-    this.fetchScheduleForCurrentDay();
-  },
-  methods: {
-    async fetchScheduleForCurrentDay() {
-      this.currentDayPending = true;
-      this.currentDayError = false;
-      try {
-        const response = await axios.post('https://api.anify.tv/schedule', {
-          fields: [
-            "id",
-            "idMal",
-            "title",
-            "coverImage",
-            "bannerImage",
-            "mappings",
-            "description",
-            "countryOfOrigin",
-            "year",
-            "color",
-            "format",
-            "type",
-            "genres",
-            "tags",
-            "airingAt",
-            "aringEpisode",
-            "totalEpisode",
-            "season",
-            "status",
-            "currentEpisode",
-          ],
-          type: "anime",
-        });
-
-        const todayDayOfWeek = new Date().getUTCDay(); // get today's day of the week
-        this.currentDayName = this.getCurrentDayName(todayDayOfWeek);
-
-        // Filter results based on today's day of the week
-        const filteredResults = response.data.filter((item) => {
-          const airingDate = new Date(item.airingAt * 1000); // assuming airingAt is a Unix timestamp in seconds
-          const dayOfWeek = airingDate.getUTCDate(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-
-          // Include only results airing today
-          return dayOfWeek === todayDayOfWeek;
-        });
-
-        this.currentDayData = filteredResults;
-      } catch (error) {
-        console.error('Error fetching schedule:', error);
-        this.currentDayError = true;
-      } finally {
-        this.currentDayPending = false;
-      }
-    },
-    getCurrentDayName(day = new Date().getUTCDay()) {
-      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      return days[day];
-    },
-  },
-};
   
 const {
   data: trendingData,
@@ -378,7 +303,7 @@ const {
       </v-row>
     </v-container>
 
-  <v-col>
+  <!-- <v-col>
     <h1>Airing Today : {{ currentDayName }}</h1>
     <div v-if="currentDayPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
@@ -408,7 +333,7 @@ const {
         </div>
       </div>
     </v-container>
-  </v-col>
+  </v-col>-->
     
     <v-col>
     <h1>Currently Airing</h1>
