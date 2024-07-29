@@ -60,7 +60,7 @@ const fetchLastSeasonData = async () => {
   const year = new Date().getFullYear();
   const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}`;
 
-  console.log('Fetching data from URL:', url); // Log the request URL
+  //console.log('Fetching data from URL:', url); // Log the request URL
   
   try {
     const { data, error } = await useFetch(url);
@@ -137,7 +137,7 @@ const {
       const currentDay = getCurrentDay();
       const url = 'https://api.anify.tv/schedule';
 
-      console.log('Fetching data from URL:', url); // Log the request URL
+     // console.log('Fetching data from URL:', url); // Log the request URL
 
       try {
         const response = await fetch(url);
@@ -426,7 +426,7 @@ const {
         title="Error"
         text="Error loading previous season anime!"
       />
-      <v-btn @click="lastSeasonRefresh()">
+      <v-btn @click="trenddataRefresh()">
         Reload?
         <v-icon>mdi-reload</v-icon>
       </v-btn>
