@@ -58,7 +58,7 @@ const fetchLastSeasonData = async () => {
 
   const previousSeason = getPreviousSeason();
   const year = new Date().getFullYear();
-  const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}?limit=60`;
+  const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}?limit=59`;
 
   //console.log('Fetching data from URL:', url); // Log the request URL
   
