@@ -2,6 +2,7 @@
 import { useStorage } from "@vueuse/core";
 import { ref, computed } from 'vue';
 import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
+import { useFetch } from '@/composables/useFetch.js';
   
 const env = useRuntimeConfig();
 
@@ -27,60 +28,67 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
-const lastSeasonData = ref(null);
-const lastSeasonPending = ref(true);
-const lastSeasonError = ref(false);
+export default {
+  setup() {
+    const lastSeasonData = ref(null);
+    const lastSeasonPending = ref(true);
+    const lastSeasonError = ref(false);
 
-const getPreviousSeason = () => {
-  const today = new Date();
-  const month = today.getMonth();
-  const seasons = {
-    0: "Winter",
-    1: "Winter",
-    2: "Spring",
-    3: "Spring",
-    4: "Summer",
-    5: "Summer",
-    6: "Fall",
-    7: "Fall",
-    8: "Fall",
-    9: "Fall",
-    10: "Winter",
-    11: "Winter",
-  };
-  const lastMonth = month === 0 ? 11 : month - 1;
-  return seasons[lastMonth].toUpperCase();
-};
+    const getPreviousSeason = () => {
+      const today = new Date();
+      const month = today.getMonth();
+      const seasons = {
+        0: "Winter",
+        1: "Winter",
+        2: "Spring",
+        3: "Spring",
+        4: "Summer",
+        5: "Summer",
+        6: "Fall",
+        7: "Fall",
+        8: "Fall",
+        9: "Fall",
+        10: "Winter",
+        11: "Winter",
+      };
+      const lastMonth = month === 0 ? 11 : month - 1;
+      return seasons[lastMonth].toUpperCase();
+    };
 
-const fetchLastSeasonData = async () => {
-  lastSeasonPending.value = true;
-  lastSeasonError.value = false;
+    const fetchLastSeasonData = async () => {
+      lastSeasonPending.value = true;
+      lastSeasonError.value = false;
 
-  const previousSeason = getPreviousSeason();
-  const year = new Date().getFullYear();
-  const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}?limit=50`;
+      const previousSeason = getPreviousSeason();
+      const year = new Date().getFullYear();
+      const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}?limit=50`;
 
-  //console.log('Fetching data from URL:', url); // Log the request URL
-  
-  try {
-    const { data, error } = await useFetch(url);
-    if (error.value) {
-      throw new Error(error.value);
-    }
-    // console.log('API response:', data.value); // Log the raw response data
-    lastSeasonData.value = data.value.results.filter(anime => anime.status === 'RELEASING');
-    // console.log('Filtered data (RELEASING):', lastSeasonData.value); // Log the filtered results
-  } catch (error) {
-    // console.error('Error fetching data:', error.message); // Log any errors
-    lastSeasonError.value = true;
-  } finally {
-    lastSeasonPending.value = false;
+      try {
+        const { data, error } = await useFetch(url);
+        if (error.value) {
+          throw new Error(error.value);
+        }
+        lastSeasonData.value = data.value.results.filter(anime => anime.status === 'RELEASING');
+      } catch (error) {
+        lastSeasonError.value = true;
+      } finally {
+        lastSeasonPending.value = false;
+      }
+    };
+
+    fetchLastSeasonData();
+
+    const currentlyAiring = computed(() => lastSeasonData.value || []);
+
+    return {
+      fetchLastSeasonData,
+      lastSeasonData,
+      lastSeasonPending,
+      lastSeasonError,
+      currentlyAiring
+    };
   }
-};
-
-fetchLastSeasonData();
-
-const currentlyAiring = computed(() => lastSeasonData.value || []);
+}
   
 const {
   data: trendingData,
@@ -414,7 +422,7 @@ const {
     </v-container>
   </v-col>-->
     
-    <v-col>
+      <v-col>
     <h1>Currently Airing</h1>
     <div v-if="lastSeasonPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
@@ -426,7 +434,7 @@ const {
         title="Error"
         text="Error loading previous season anime!"
       />
-      <v-btn @click="trenddataRefresh()">
+      <v-btn @click="fetchLastSeasonData"> <!-- Changed from "trenddataRefresh" to "fetchLastSeasonData" -->
         Reload?
         <v-icon>mdi-reload</v-icon>
       </v-btn>
