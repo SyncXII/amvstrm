@@ -1,6 +1,7 @@
 <script setup>
 import { useStorage } from "@vueuse/core";
-import { ref, computed, useNuxtApp } from '#app';
+import { ref, computed } from 'vue';
+import { useNuxtApp } from '#app';
 import { useFetch } from '#app'; // replace with your actual path
   
 const nuxtApp = useNuxtApp();
