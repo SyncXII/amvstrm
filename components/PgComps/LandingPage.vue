@@ -3,7 +3,9 @@ import { useStorage } from "@vueuse/core";
 import { ref, computed } from 'vue';
 import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
 //import { useRuntimeConfig } from '#app';
+import { ref, computed, useNuxtApp } from '#app';
   
+const nuxtApp = useNuxtApp();
 const env = useRuntimeConfig();
 
 const history_state = useStorage("site-watch", {});
@@ -420,9 +422,9 @@ const {
         dense
         type="error"
         title="Error"
-        text="Error loading previous season anime!"
+        text="Error loading current season anime!"
       />
-      <v-btn @click="fetchLastSeasonData"> <!-- Changed from "trenddataRefresh" to "fetchLastSeasonData" -->
+      <v-btn @click="fetchLastSeasonData()"> <!-- Changed from "trenddataRefresh" to "fetchLastSeasonData" -->
         Reload?
         <v-icon>mdi-reload</v-icon>
       </v-btn>
