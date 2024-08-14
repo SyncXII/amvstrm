@@ -1,8 +1,8 @@
 <script setup>
 import { useStorage } from "@vueuse/core";
 import { ref, computed } from 'vue';
-import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
-//import { useFetch } from '@/composables/useFetch.js';
+//import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
+import { useFetch } from '@/composables/useFetch.js';
   
 const env = useRuntimeConfig();
 
@@ -443,14 +443,15 @@ const {
           class="d-flex justify-center"
         >
           <AnimeCard
-            :id="anime.id"
-            :title="anime.title.userPreferred"
-            :imgsrc="anime.coverImage.large"
-            :anime-color="anime.coverImage.color"
-            :year="anime.seasonYear"
-            :type="anime.format"
-            :total-ep="anime.episodes"
-            :status="anime.status"
+            :id="d.id"
+            :title="d.title.userPreferred"
+            :imgsrc="d.coverImage.large"
+            :imgalt="d.id.toString()"
+            :anime-color="d.coverImage.color"
+            :year="d.seasonYear"
+            :type="d.format"
+            :total-ep="d.episodes"
+            :status="d.status"
           />
         </div>
       </div>
