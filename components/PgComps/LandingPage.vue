@@ -435,10 +435,9 @@ const {
         class="d-flex justify-center"
       >
         <AnimeCard
-          :id="anime.id" <!-- Ensure 'anime' is used correctly here -->
+          :id="anime.id"
           :title="anime.title.userPreferred"
           :imgsrc="anime.coverImage.large"
-          :imgalt="anime.id.toString()"
           :anime-color="anime.coverImage.color"
           :year="anime.seasonYear"
           :type="anime.format"
