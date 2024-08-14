@@ -29,38 +29,39 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
-    const lastSeasonData = ref(null);
-    const lastSeasonPending = ref(true);
-    const lastSeasonError = ref(false);
+  const getPreviousSeason = () => {
+  const today = new Date();
+  const month = today.getMonth();
+  const year = today.getFullYear();
 
-    const getPreviousSeason = () => {
-      const today = new Date();
-      const month = today.getMonth();
-      const seasons = {
-        0: "Winter",
-        1: "Winter",
-        2: "Spring",
-        3: "Spring",
-        4: "Summer",
-        5: "Summer",
-        6: "Fall",
-        7: "Fall",
-        8: "Fall",
-        9: "Fall",
-        10: "Winter",
-        11: "Winter",
-      };
-      const lastMonth = month === 0 ? 11 : month - 1;
-      return seasons[lastMonth].toUpperCase();
-    };
+  const seasons = {
+    0: "Winter",
+    1: "Winter",
+    2: "Spring",
+    3: "Spring",
+    4: "Summer",
+    5: "Summer",
+    6: "Fall",
+    7: "Fall",
+    8: "Fall",
+    9: "Fall",
+    10: "Winter",
+    11: "Winter",
+  };
 
-    const fetchLastSeasonData = async () => {
+  const lastMonth = month === 0 ? 11 : month - 1;
+  const lastSeason = seasons[lastMonth].toUpperCase();
+  const lastSeasonYear = lastMonth >= 10 ? year - 1 : year; // Adjust year for previous Winter
+
+  return { season: lastSeason, year: lastSeasonYear };
+};
+
+const fetchLastSeasonData = async () => {
   lastSeasonPending.value = true;
   lastSeasonError.value = false;
 
-  const previousSeason = getPreviousSeason();
-  const year = new Date().getFullYear();
-  const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}?limit=50`;
+  const { season, year } = getPreviousSeason();
+  const url = `${env.public.API_URL}/api/${env.public.version}/season/${season}/${year}?limit=50`;
 
   try {
     const { data, error } = await useFetch(url).fetch();
@@ -76,8 +77,6 @@ const getSeason = () => {
 };
 
 fetchLastSeasonData();
-
-const currentlyAiring = computed(() => lastSeasonData.value || []);
   
 const {
   data: trendingData,
@@ -412,44 +411,44 @@ const {
   </v-col>-->
     
       <v-col>
-    <h1>Currently Airing</h1>
-    <div v-if="lastSeasonPending" class="loadingBlock">
-      <v-progress-circular :size="45" indeterminate />
-    </div>
-    <div v-else-if="lastSeasonError">
-      <v-alert
-        dense
-        type="error"
-        title="Error"
-        text="Error loading current season anime!"
-      />
-      <v-btn @click="fetchLastSeasonData()"> <!-- Changed from "trenddataRefresh" to "fetchLastSeasonData" -->
-        Reload?
-        <v-icon>mdi-reload</v-icon>
-      </v-btn>
-    </div>
-    <v-container v-else fluid>
-      <div class="grid">
-        <div
-          v-for="(anime, index) in currentlyAiring"
-          :key="index"
-          class="d-flex justify-center"
-        >
-          <AnimeCard
-            :id="d.id"
-            :title="d.title.userPreferred"
-            :imgsrc="d.coverImage.large"
-            :imgalt="d.id.toString()"
-            :anime-color="d.coverImage.color"
-            :year="d.seasonYear"
-            :type="d.format"
-            :total-ep="d.episodes"
-            :status="d.status"
-          />
-        </div>
+  <h1>Currently Airing</h1>
+  
+  <!-- Show loading spinner while data is being fetched -->
+  <div v-if="lastSeasonPending" class="loadingBlock">
+    <v-progress-circular :size="45" indeterminate />
+  </div>
+  
+  <!-- Show error message if there's an issue fetching the data -->
+  <div v-else-if="lastSeasonError">
+    <v-alert dense type="error" title="Error" text="Error loading current season anime!" />
+    <v-btn @click="fetchLastSeasonData()"> <!-- Ensure this points to your fetch function -->
+      Reload?
+      <v-icon>mdi-reload</v-icon>
+    </v-btn>
+  </div>
+  <!-- Display the anime data once it's loaded -->
+  <v-container v-else fluid>
+    <div class="grid">
+      <div
+        v-for="(anime, index) in currentlyAiring"
+        :key="index"
+        class="d-flex justify-center"
+      >
+        <AnimeCard
+          :id="anime.id" <!-- Ensure 'anime' is used correctly here -->
+          :title="anime.title.userPreferred"
+          :imgsrc="anime.coverImage.large"
+          :imgalt="anime.id.toString()"
+          :anime-color="anime.coverImage.color"
+          :year="anime.seasonYear"
+          :type="anime.format"
+          :total-ep="anime.episodes"
+          :status="anime.status"
+        />
       </div>
-    </v-container>
-  </v-col>
+    </div>
+  </v-container>
+</v-col>
     
     <!-- Ad Container -->
     <v-container fluid class="py-4">
