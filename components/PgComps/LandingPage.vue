@@ -1,8 +1,8 @@
 <script setup>
 import { useStorage } from "@vueuse/core";
 import { ref, computed } from 'vue';
-//import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
-import { useFetch } from '@/composables/useFetch.js';
+import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
+import { useRuntimeConfig } from '@nuxtjs/composition-api';
   
 const env = useRuntimeConfig();
 
@@ -54,37 +54,29 @@ const getSeason = () => {
     };
 
     const fetchLastSeasonData = async () => {
-      lastSeasonPending.value = true;
-      lastSeasonError.value = false;
+  lastSeasonPending.value = true;
+  lastSeasonError.value = false;
 
-      const previousSeason = getPreviousSeason();
-      const year = new Date().getFullYear();
-      const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}?limit=50`;
+  const previousSeason = getPreviousSeason();
+  const year = new Date().getFullYear();
+  const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}?limit=50`;
 
-      try {
-        const { data, error } = await useFetch(url);
-        if (error.value) {
-          throw new Error(error.value);
-        }
-        lastSeasonData.value = data.value.results.filter(anime => anime.status === 'RELEASING');
-      } catch (error) {
-        lastSeasonError.value = true;
-      } finally {
-        lastSeasonPending.value = false;
-      }
-    };
+  try {
+    const { data, error } = await useFetch(url).fetch();
+    if (error.value) {
+      throw new Error(error.value);
+    }
+    lastSeasonData.value = data.value.results.filter(anime => anime.status === 'RELEASING');
+  } catch (error) {
+    lastSeasonError.value = true;
+  } finally {
+    lastSeasonPending.value = false;
+  }
+};
 
-    fetchLastSeasonData();
+fetchLastSeasonData();
 
-    const currentlyAiring = computed(() => lastSeasonData.value || []);
-
-    return {
-      fetchLastSeasonData,
-      lastSeasonData,
-      lastSeasonPending,
-      lastSeasonError,
-      currentlyAiring
-    };
+const currentlyAiring = computed(() => lastSeasonData.value || []);
   
 const {
   data: trendingData,
