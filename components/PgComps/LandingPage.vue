@@ -28,8 +28,6 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
-export default {
-  setup() {
     const lastSeasonData = ref(null);
     const lastSeasonPending = ref(true);
     const lastSeasonError = ref(false);
@@ -87,8 +85,6 @@ export default {
       lastSeasonError,
       currentlyAiring
     };
-  }
-}
   
 const {
   data: trendingData,
