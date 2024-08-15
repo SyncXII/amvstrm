@@ -1,13 +1,15 @@
 <script setup>
 import { useStorage } from "@vueuse/core";
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useNuxtApp } from '#app';
 import { useFetch } from '#app'; // replace with your actual path
   
-const nuxtApp = useNuxtApp();
-const env = useRuntimeConfig();
-
 const history_state = useStorage("site-watch", {});
+
+// reactive variables
+const lastSeasonPending = ref(false);
+const lastSeasonError = ref(false);
+const lastSeasonData = ref([]);
 
 const getSeason = () => {
   const today = new Date();
@@ -61,7 +63,7 @@ const fetchLastSeasonData = async () => {
   lastSeasonError.value = false;
 
   const { season, year } = getPreviousSeason();
-  const url = `${env.public.API_URL}/api/${env.public.version}/season/${season}/${year}?limit=50`;
+  const url = `${import.meta.env.VITE_API_URL}/api/${import.meta.env.VITE_VERSION}/season/${season}/${year}?limit=50`;
 
   try {
     const { data, error } = await useFetch(url).fetch();
@@ -76,7 +78,8 @@ const fetchLastSeasonData = async () => {
   }
 };
 
-fetchLastSeasonData();
+// Use onMounted to call fetchLastSeasonData when the component mounts
+onMounted(fetchLastSeasonData);
   
 const {
   data: trendingData,
@@ -410,9 +413,8 @@ const {
     </v-container>
   </v-col>-->
     
-      <v-col>
+<v-col>
   <h1>Currently Airing</h1>
-  
   <!-- Show loading spinner while data is being fetched -->
   <div v-if="lastSeasonPending" class="loadingBlock">
     <v-progress-circular :size="45" indeterminate />
@@ -421,16 +423,17 @@ const {
   <!-- Show error message if there's an issue fetching the data -->
   <div v-else-if="lastSeasonError">
     <v-alert dense type="error" title="Error" text="Error loading current season anime!" />
-    <v-btn @click="fetchLastSeasonData()"> <!-- Ensure this points to your fetch function -->
+    <v-btn @click="fetchLastSeasonData">
       Reload?
       <v-icon>mdi-reload</v-icon>
     </v-btn>
   </div>
+  
   <!-- Display the anime data once it's loaded -->
   <v-container v-else fluid>
     <div class="grid">
       <div
-        v-for="(anime, index) in currentlyAiring"
+        v-for="(anime, index) in lastSeasonData"
         :key="index"
         class="d-flex justify-center"
       >
