@@ -1,15 +1,11 @@
 <script setup>
 import { useStorage } from "@vueuse/core";
-import { ref, computed, onMounted } from 'vue';
-import { useNuxtApp } from '#app';
-import { useFetch } from '#app'; // replace with your actual path
+import { ref, computed } from 'vue';
+import { useFetch } from '#app'; // This is the correct way to import useFetch in Nuxt 3
   
-const history_state = useStorage("site-watch", {});
+const env = useRuntimeConfig();
 
-// reactive variables
-const lastSeasonPending = ref(false);
-const lastSeasonError = ref(false);
-const lastSeasonData = ref([]);
+const history_state = useStorage("site-watch", {});
 
 const getSeason = () => {
   const today = new Date();
@@ -31,11 +27,13 @@ const getSeason = () => {
   return seasons[month].toUpperCase();
 };
 
-  const getPreviousSeason = () => {
+const lastSeasonData = ref(null);
+const lastSeasonPending = ref(true);
+const lastSeasonError = ref(false);
+
+const getPreviousSeason = () => {
   const today = new Date();
   const month = today.getMonth();
-  const year = today.getFullYear();
-
   const seasons = {
     0: "Winter",
     1: "Winter",
@@ -50,36 +48,39 @@ const getSeason = () => {
     10: "Winter",
     11: "Winter",
   };
-
   const lastMonth = month === 0 ? 11 : month - 1;
-  const lastSeason = seasons[lastMonth].toUpperCase();
-  const lastSeasonYear = lastMonth >= 10 ? year - 1 : year; // Adjust year for previous Winter
-
-  return { season: lastSeason, year: lastSeasonYear };
+  return seasons[lastMonth].toUpperCase();
 };
 
 const fetchLastSeasonData = async () => {
   lastSeasonPending.value = true;
   lastSeasonError.value = false;
 
-  const { season, year } = getPreviousSeason();
-  const url = `${import.meta.env.VITE_API_URL}/api/${import.meta.env.VITE_VERSION}/season/${season}/${year}?limit=50`;
+  const previousSeason = getPreviousSeason();
+  const year = new Date().getFullYear();
+  const url = `${env.public.API_URL}/api/${env.public.version}/season/${previousSeason}/${year}?limit=49`;
 
+  //console.log('Fetching data from URL:', url); // Log the request URL
+  
   try {
-    const { data, error } = await useFetch(url).fetch();
+    const { data, error } = await useFetch(url);
     if (error.value) {
       throw new Error(error.value);
     }
+    // console.log('API response:', data.value); // Log the raw response data
     lastSeasonData.value = data.value.results.filter(anime => anime.status === 'RELEASING');
+    // console.log('Filtered data (RELEASING):', lastSeasonData.value); // Log the filtered results
   } catch (error) {
+    // console.error('Error fetching data:', error.message); // Log any errors
     lastSeasonError.value = true;
   } finally {
     lastSeasonPending.value = false;
   }
 };
 
-// Use onMounted to call fetchLastSeasonData when the component mounts
-onMounted(fetchLastSeasonData);
+fetchLastSeasonData();
+
+const currentlyAiring = computed(() => lastSeasonData.value || []);
   
 const {
   data: trendingData,
@@ -413,44 +414,44 @@ const {
     </v-container>
   </v-col>-->
     
-<v-col>
-  <h1>Currently Airing</h1>
-  <!-- Show loading spinner while data is being fetched -->
-  <div v-if="lastSeasonPending" class="loadingBlock">
-    <v-progress-circular :size="45" indeterminate />
-  </div>
-  
-  <!-- Show error message if there's an issue fetching the data -->
-  <div v-else-if="lastSeasonError">
-    <v-alert dense type="error" title="Error" text="Error loading current season anime!" />
-    <v-btn @click="fetchLastSeasonData">
-      Reload?
-      <v-icon>mdi-reload</v-icon>
-    </v-btn>
-  </div>
-  
-  <!-- Display the anime data once it's loaded -->
-  <v-container v-else fluid>
-    <div class="grid">
-      <div
-        v-for="(anime, index) in lastSeasonData"
-        :key="index"
-        class="d-flex justify-center"
-      >
-        <AnimeCard
-          :id="anime.id"
-          :title="anime.title.userPreferred"
-          :imgsrc="anime.coverImage.large"
-          :anime-color="anime.coverImage.color"
-          :year="anime.seasonYear"
-          :type="anime.format"
-          :total-ep="anime.episodes"
-          :status="anime.status"
-        />
-      </div>
+    <v-col>
+    <h1>Currently Airing</h1>
+    <div v-if="lastSeasonPending" class="loadingBlock">
+      <v-progress-circular :size="45" indeterminate />
     </div>
-  </v-container>
-</v-col>
+    <div v-else-if="lastSeasonError">
+      <v-alert
+        dense
+        type="error"
+        title="Error"
+        text="Error loading previous season anime!"
+      />
+      <v-btn @click="trenddataRefresh()">
+        Reload?
+        <v-icon>mdi-reload</v-icon>
+      </v-btn>
+    </div>
+    <v-container v-else fluid>
+      <div class="grid">
+        <div
+          v-for="(anime, index) in currentlyAiring"
+          :key="index"
+          class="d-flex justify-center"
+        >
+          <AnimeCard
+            :id="anime.id"
+            :title="anime.title.userPreferred"
+            :imgsrc="anime.coverImage.large"
+            :anime-color="anime.coverImage.color"
+            :year="anime.seasonYear"
+            :type="anime.format"
+            :total-ep="anime.episodes"
+            :status="anime.status"
+          />
+        </div>
+      </div>
+    </v-container>
+  </v-col>
     
     <!-- Ad Container -->
     <v-container fluid class="py-4">
@@ -657,7 +658,7 @@ const {
         dense
         type="error"
         title="Error"
-        text="Error loading previous season anime!"
+        text="Error loading current season anime!"
       />
       <v-btn @click="lastSeasonRefresh">
         Reload?
