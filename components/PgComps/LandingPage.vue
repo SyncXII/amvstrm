@@ -414,7 +414,7 @@ const {
     </v-container>
   </v-col>-->
     
-    <v-col>
+    <!--<v-col>
     <h1>Currently Airing</h1>
     <div v-if="lastSeasonPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
@@ -453,7 +453,7 @@ const {
     </v-container>
   </v-col>
     
-    <!-- Ad Container -->
+    <!-- Ad Container
     <v-container fluid class="py-4">
       <v-row justify="center">
         <v-col cols="12">
@@ -471,7 +471,7 @@ const {
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
+    </v-container>-->
     
     <v-col>
       <h1>Upcoming Anime : {{ getSeason() }}</h1>
@@ -649,7 +649,7 @@ const {
       </v-row>
     </v-container>
     
-  <h2 class="mt-10">Currently Airing</h2>
+  <!--<h2 class="mt-10">Currently Airing</h2>
     <div v-if="lastSeasonPending" class="loadingBlock">
       <v-progress-circular :size="45" indeterminate />
     </div>
@@ -682,7 +682,7 @@ const {
       </v-col>
     </v-row>
     
-    <!-- Ad Container -->
+    <!-- Ad Container 
     <v-container fluid class="py-4">
       <v-row justify="center">
         <v-col cols="12">
@@ -700,7 +700,7 @@ const {
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
+    </v-container>-->
     
     <h2 class="mt-10">Upcoming Anime : {{ getSeason() }}</h2>
     <div v-if="seaspend" class="loadingBlock">
