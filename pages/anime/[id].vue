@@ -890,7 +890,6 @@ const formatStringDate = (year, month, day) => {
   margin-top: -90px;
   margin-right: 1rem;
 }
-
 .image-poster {
   background-color: rgba(212, 230, 245, 0.5);
   border-radius: 4px;
