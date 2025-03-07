@@ -79,18 +79,11 @@ useHead({
                 }
               };
           if (!p[n]) {
-            try {
-              Object.freeze(p[n] = l)
-            } catch (e) {}
-            u()
-          }
-        })();
-      `,
-    },
-  ],
-  __dangerouslyDisableSanitizersByTagID: {
-    'ad-script': ['innerHTML']
-  }
+useHead({
+  htmlAttrs: {
+    lang: "en",
+  },
+  title: anime.value?.title.userPreferred,
 });
 
 const countdown = ref();
